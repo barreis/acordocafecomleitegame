@@ -232,14 +232,14 @@
             background-color: #F8D7DA;
             color: var(--error-red);
             border: 1px solid #F5C6CB;
-            display: block;
+            display: block !important;
         }
 
         .feedback.success {
             background-color: #D4EDDA;
             color: var(--success-green);
             border: 1px solid #C3E6CB;
-            display: block;
+            display: block !important;
         }
 
         .stats-box {
@@ -345,12 +345,12 @@
     </div>
 
     <script>
-        // Função para ocultar respostas no código fonte (Base64 hash check)
+        // Função de hash simples para ocultar respostas no código fonte
         function hash(str) {
             return btoa(unescape(encodeURIComponent(str.trim().toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))));
         }
 
-        // BANCO DE DADOS DAS 30 PERGUNTAS COM MÚLTIPLAS DICAS ROTATIVAS E RESPOSTAS CRIPTOGRAFADAS
+        // BANCO DE DADOS DAS 30 PERGUNTAS COM ENUNCIADOS SEM RESPOSTAS REVELADAS
         const questions = [
             {
                 type: "selecao",
@@ -382,13 +382,13 @@
                 type: "codigo",
                 tag: "Decifre o Código",
                 title: "3. O Domínio Local",
-                question: "Decifre o termo referente ao controle político local (chefes políticos rurais): <br><br><b>C - O - R - O - N - E - L - I - S - M - O</b>",
-                hint: "Digite o termo exatamente:",
+                question: "Decifre a palavra-chave que define o sistema de controle político exercido pelos grandes fazendeiros nos municípios rurais: <br><br><b>_ _ _ _ _ _ _ _ _ _ _ _</b> (12 letras)",
+                hint: "Digite a palavra secreta:",
                 keyHash: hash("CORONELISMO"),
                 hints: [
-                    "💡 Dica 1: Trata-se do poder exercido pelos grandes fazendeiros e proprietários de terras nos municípios.",
+                    "💡 Dica 1: Trata-se do poder exercido pelos grandes fazendeiros sobre os eleitores rurais.",
                     "💡 Dica 2: Esse sistema troca favores e empregos pelo controle do voto dos camponeses.",
-                    "💡 Dica 3: A palavra começa com a patente militar fictícia atribuída aos grandes fazendeiros: C-O-R-O-N-E-L..."
+                    "💡 Dica 3: A palavra deriva da patente militar fictícia atribuída aos fazendeiros: C-O-R-O-N-E-L..."
                 ]
             },
             {
@@ -404,7 +404,7 @@
                 keyHash: hash("1,2,3"),
                 hints: [
                     "💡 Dica 1: A quebra do acordo pelo presidente paulista gerou a reação dos opositores e culminou na revolução.",
-                    "💡 Dica 2: Primeiro veio a indicação de Júlio Prestes, depois a formação da Aliança Liberal e, por fim, o golpe de 1930.",
+                    "💡 Dica 2: Primeiro veio a indicação de Júlio Prestes, depois a formação da Aliança Liberal e, por fim, a Revolução de 1930.",
                     "💡 Dica 3: A ordem correta segue exatamente a sequência linear dos acontecimentos de 1929 a 1930."
                 ]
             },
@@ -438,7 +438,7 @@
                 type: "codigo",
                 tag: "Decifre o Código",
                 title: "7. A Oposição Política",
-                question: "Complete a palavra faltante na coligação opositora formada em 1929: <br><b>ALIANÇA _________</b>",
+                question: "Decifre a palavra que falta no nome da coligação opositora criada em 1929: <br><br><b>ALIANÇA _ _ _ _ _ _ _</b> (7 letras)",
                 hint: "Digite a palavra faltante:",
                 keyHash: hash("LIBERAL"),
                 hints: [
@@ -477,13 +477,13 @@
                 type: "codigo",
                 tag: "Decifre o Código",
                 title: "10. Nome Técnico",
-                question: "Insira a palavra para definir o governo controlado por um pequeno grupo da elite: <br><b>O L I G A R Q U I A</b>",
+                question: "Insira a palavra técnica para definir um governo controlado por um pequeno grupo fechado de elite: <br><br><b>_ _ _ _ _ _ _ _ _ _</b> (10 letras)",
                 hint: "Digite o termo:",
                 keyHash: hash("OLIGARQUIA"),
                 hints: [
                     "💡 Dica 1: Termo de origem grega que significa 'governo de poucos'.",
                     "💡 Dica 2: Refere-se à dominação das famílias proprietárias de terras sobre as instituições políticas.",
-                    "💡 Dica 3: Escreva a palavra sem espaço: O-L-I-G-A-R-Q-U-I-A."
+                    "💡 Dica 3: Escreva a palavra: O-L-I-G-A-R-Q-U-I-A."
                 ]
             },
             {
@@ -533,7 +533,7 @@
                 type: "codigo",
                 tag: "Decifre o Código",
                 title: "14. A Queda Econômica",
-                question: "Decifre o ano da crise econômica internacional que abalou as exportações de café brasileiro: <br><b>C R I S E  D E  1 9 2 9</b>",
+                question: "Decifre o ano da grande crise econômica mundial que abalou as vendas de café brasileiro: <br><br><b>Ano: _ _ _ _</b> (4 dígitos)",
                 hint: "Digite o ano com quatro dígitos:",
                 keyHash: hash("1929"),
                 hints: [
@@ -572,19 +572,19 @@
                 type: "codigo",
                 tag: "Decifre o Código",
                 title: "17. O Estopim de 1930",
-                question: "Qual o sobrenome do candidato à vice-presidência assassinado em Recife cujo crime serviu de estopim para a Revolução de 1930? <br><b>João _________</b>",
+                question: "Qual o sobrenome do candidato à vice-presidência cujo assassinato serviu de estopim para a Revolução de 1930? <br><br><b>João _ _ _ _ _ _</b> (6 letras)",
                 hint: "Digite o sobrenome:",
                 keyHash: hash("PESSOA"),
                 hints: [
                     "💡 Dica 1: Ele era candidato a vice-presidente na chapa da Aliança Liberal ao lado de Getúlio Vargas.",
                     "💡 Dica 2: Hoje seu sobrenome dá nome à capital do estado da Paraíba.",
-                    "💡 Dica 3: Escreva a palavra P-E-S-S-O-A."
+                    "💡 Dica 3: Escreva o sobrenome: P-E-S-S-O-A."
                 ]
             },
             {
                 type: "ordem",
                 tag: "Colocar na Ordem",
-                title: "18. Encadeamento da Fraude",
+                title: "18. Encadedamento da Fraude",
                 question: "Ordene a cadeia de dependência eleitoral (1, 2, 3):",
                 items: [
                     { id: "A", text: "Coronel coage os eleitores no município." },
@@ -628,7 +628,7 @@
                 type: "codigo",
                 tag: "Decifre o Código",
                 title: "21. A Capital Federal",
-                question: "Qual era a cidade capital do Brasil durante a Política do Café com Leite? <br><b>R I O  D E  J A N E I R O</b>",
+                question: "Qual era a cidade capital do Brasil durante a Política do Café com Leite? <br><br><b>_ _ _   _ _   _ _ _ _ _ _ _</b>",
                 hint: "Digite o nome da cidade:",
                 keyHash: hash("RIO DE JANEIRO"),
                 hints: [
@@ -667,7 +667,7 @@
                 type: "codigo",
                 tag: "Decifre o Código",
                 title: "24. O Líder da Revolução",
-                question: "Quem assumiu o poder como chefe do Governo Provisório em 1930? <br><b>Getúlio _________</b>",
+                question: "Quem foi o político gaúcho que assumiu o poder como chefe do Governo Provisório em 1930? <br><br><b>Getúlio _ _ _ _ _ _</b> (6 letras)",
                 hint: "Digite o sobrenome:",
                 keyHash: hash("VARGAS"),
                 hints: [
@@ -749,8 +749,8 @@
                 type: "codigo",
                 tag: "Decifre o Código Final",
                 title: "30. A Senha do Cofre",
-                question: "Digite o produto símbolo da economia brasileira da Primeira República: <br><b>☕ C A F E</b>",
-                hint: "Digite a palavra:",
+                question: "Digite o nome do produto agroexportador símbolo que deu nome a este período republicano: <br><br><b>_ _ _ _</b> (4 letras)",
+                hint: "Digite a palavra secreta:",
                 keyHash: hash("CAFE"),
                 hints: [
                     "💡 Dica 1: É a bebida quente mais consumida do Brasil, cultivada no Vale do Paraíba e Oeste Paulista.",
@@ -760,7 +760,7 @@
             }
         ];
 
-        // VARIÁVEIS DE CONTROLE E ESTADO
+        // VARIÁVEIS DE CONTROLE
         let groupName = "";
         let groupMembers = "";
         let errorCount = 0;
@@ -768,8 +768,6 @@
         let timeLeft = 40 * 60;
         let timerInterval;
         let startTime;
-        
-        // Rastreio de erros por pergunta para alternar dicas
         let questionErrors = Array(questions.length).fill(0);
 
         function startGame() {
@@ -815,7 +813,9 @@
             updateProgress();
             const container = document.getElementById("quiz-container");
             const feedback = document.getElementById("feedback-box");
+            
             feedback.style.display = "none";
+            feedback.className = "feedback";
             
             const q = questions[currentQ];
             let html = `
@@ -869,7 +869,6 @@
             const fb = document.getElementById("feedback-box");
             const q = questions[currentQ];
             
-            // Seleciona a dica atual em rotação (ciclo do array de hints)
             let hintIndex = (questionErrors[currentQ] - 1) % q.hints.length;
             let currentHint = q.hints[hintIndex];
             
