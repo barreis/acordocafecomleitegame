@@ -75,7 +75,6 @@
             display: block;
         }
 
-        /* Form & Inputs */
         .form-group {
             margin-bottom: 15px;
         }
@@ -116,7 +115,6 @@
             transform: translateY(-2px);
         }
 
-        /* Game HUD */
         .hud {
             display: flex;
             justify-content: space-between;
@@ -347,7 +345,12 @@
     </div>
 
     <script>
-        // BANCO DE DADOS COM AS 30 PERGUNTAS E DICAS PEDAGÓGICAS
+        // Função para ocultar respostas no código fonte (Base64 hash check)
+        function hash(str) {
+            return btoa(unescape(encodeURIComponent(str.trim().toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))));
+        }
+
+        // BANCO DE DADOS DAS 30 PERGUNTAS COM MÚLTIPLAS DICAS ROTATIVAS E RESPOSTAS CRIPTOGRAFADAS
         const questions = [
             {
                 type: "selecao",
@@ -355,8 +358,12 @@
                 title: "1. A Base Agroexportadora",
                 question: "Quais eram os dois estados protagonistas da Política do Café com Leite na República Velha?",
                 options: ["São Paulo e Rio de Janeiro", "São Paulo e Minas Gerais", "Minas Gerais e Rio Grande do Sul", "Bahia e Pernambuco"],
-                answer: 1,
-                hintPedagogical: "💡 Dica: Lembre-se de qual estado era o maior produtor de café e qual era o estado de maior eleitorado e forte produção leiteira/cafeira!"
+                keyHash: hash("São Paulo e Minas Gerais"),
+                hints: [
+                    "💡 Dica 1: Pense no estado líder da produção de café e no estado de maior colégio eleitoral do país.",
+                    "💡 Dica 2: A aliança alternava presidentes paulistas e mineiros na liderança do poder federal.",
+                    "💡 Dica 3: Um dos estados fica no Sudeste e o outro é famoso pelas suas montanhas e tradição cafeeira e pecuária."
+                ]
             },
             {
                 type: "vf",
@@ -364,17 +371,25 @@
                 title: "2. Sufrágio na República Velha",
                 question: "A Constituição de 1891 garantiu o direito de voto aos analfabetos e às mulheres.",
                 options: ["Verdadeiro", "Falso"],
-                answer: 1,
-                hintPedagogical: "💡 Dica: A Constituição de 1891 excluía expressamente analfabetos, mulheres, soldados e membros de ordens religiosas da votação."
+                keyHash: hash("Falso"),
+                hints: [
+                    "💡 Dica 1: Lembre-se de que a maioria da população brasileira da época não sabia ler nem escrever e continuava excluída.",
+                    "💡 Dica 2: A Constituição de 1891 proibia categoricamente o voto de analfabetos, mulheres, soldados e religiosos.",
+                    "💡 Dica 3: O voto era restrito aos homens alfabetizados e maiores de 21 anos. Portanto, essa afirmação não é verdadeira."
+                ]
             },
             {
                 type: "codigo",
                 tag: "Decifre o Código",
                 title: "3. O Domínio Local",
-                question: "Decifre a palavra-chave (Prática coercitiva dos chefes políticos locais sobre os eleitores rurais): <br><br><b>C - O - R - O - N - E - L - I - S - M - O</b>",
+                question: "Decifre o termo referente ao controle político local (chefes políticos rurais): <br><br><b>C - O - R - O - N - E - L - I - S - M - O</b>",
                 hint: "Digite o termo exatamente:",
-                answer: "CORONELISMO",
-                hintPedagogical: "💡 Dica: É o sistema baseado na liderança do fazendeiro (coronel) que trocava favores por votos no âmbito municipal."
+                keyHash: hash("CORONELISMO"),
+                hints: [
+                    "💡 Dica 1: Trata-se do poder exercido pelos grandes fazendeiros e proprietários de terras nos municípios.",
+                    "💡 Dica 2: Esse sistema troca favores e empregos pelo controle do voto dos camponeses.",
+                    "💡 Dica 3: A palavra começa com a patente militar fictícia atribuída aos grandes fazendeiros: C-O-R-O-N-E-L..."
+                ]
             },
             {
                 type: "ordem",
@@ -386,8 +401,12 @@
                     { id: "B", text: "Minas Gerais se alia ao RS e à Paraíba (Aliança Liberal)." },
                     { id: "C", text: "Eclode a Revolução de 1930 e Getúlio Vargas assume o poder." }
                 ],
-                correctOrder: ["1", "2", "3"],
-                hintPedagogical: "💡 Dica: Primeiro veio a quebra do acordo por SP, depois a reação/oposição de MG e, por fim, a tomada de poder violenta."
+                keyHash: hash("1,2,3"),
+                hints: [
+                    "💡 Dica 1: A quebra do acordo pelo presidente paulista gerou a reação dos opositores e culminou na revolução.",
+                    "💡 Dica 2: Primeiro veio a indicação de Júlio Prestes, depois a formação da Aliança Liberal e, por fim, o golpe de 1930.",
+                    "💡 Dica 3: A ordem correta segue exatamente a sequência linear dos acontecimentos de 1929 a 1930."
+                ]
             },
             {
                 type: "selecao",
@@ -395,8 +414,12 @@
                 title: "5. Voto Aberto",
                 question: "Como era chamado o voto vigiado e fraudado controlado pelos coronéis?",
                 options: ["Voto Secreto", "Voto de Cabresto", "Voto Censitário", "Voto Direto"],
-                answer: 1,
-                hintPedagogical: "💡 Dica: O termo faz analogia à rédea de couro usada nos animais de carga para guiá-los à força."
+                keyHash: hash("Voto de Cabresto"),
+                hints: [
+                    "💡 Dica 1: Faz referência a um acessório de couro utilizado para guiar animais de carga.",
+                    "💡 Dica 2: Os eleitores eram 'guiados' e pressionados a votar nos candidatos escolhidos pelo coronel.",
+                    "💡 Dica 3: O eleitor não tinha liberdade, pois o voto era aberto e fiscalizado pelos capangas."
+                ]
             },
             {
                 type: "vf",
@@ -404,17 +427,25 @@
                 title: "6. Convênio de Taubaté (1906)",
                 question: "O Convênio de Taubaté foi um acordo em que o Estado comprava o excedente de café para manter os preços altos no mercado internacional.",
                 options: ["Verdadeiro", "Falso"],
-                answer: 0,
-                hintPedagogical: "💡 Dica: O governo usava empréstimos estrangeiros para estocar sementes de café e impedir que a superprodução derrubasse os preços."
+                keyHash: hash("Verdadeiro"),
+                hints: [
+                    "💡 Dica 1: A política de valorização do café socializou os prejuízos dos cafeicultores com o governo.",
+                    "💡 Dica 2: O governo contraía empréstimos no exterior para comprar as sacas sobressalentes e estocá-las.",
+                    "💡 Dica 3: A afirmação é correta: o acordo visava proteger o lucro das oligarquias cafeeiras."
+                ]
             },
             {
                 type: "codigo",
                 tag: "Decifre o Código",
                 title: "7. A Oposição Política",
-                question: "Complete o código com a coligação opositora formada em 1929: <br><b>ALIANÇA _________</b>",
+                question: "Complete a palavra faltante na coligação opositora formada em 1929: <br><b>ALIANÇA _________</b>",
                 hint: "Digite a palavra faltante:",
-                answer: "LIBERAL",
-                hintPedagogical: "💡 Dica: Esta frente uniu Minas Gerais, Rio Grande do Sul e Paraíba para lançar Getúlio Vargas à presidência."
+                keyHash: hash("LIBERAL"),
+                hints: [
+                    "💡 Dica 1: O nome remete à palavra liberdade e opunha-se ao domínio concentrado de São Paulo.",
+                    "💡 Dica 2: Essa frente uniu lideranças de Minas Gerais, Rio Grande do Sul e Paraíba.",
+                    "💡 Dica 3: O candidato à presidência dessa chapa foi Getúlio Vargas. O nome da chapa era Aliança L-I-B-E-R-A-L."
+                ]
             },
             {
                 type: "selecao",
@@ -422,8 +453,12 @@
                 title: "8. Política dos Governadores",
                 question: "Quem foi o presidente que idealizou a 'Política dos Governadores' para harmonizar o poder federal e estadual?",
                 options: ["Deodoro da Fonseca", "Prudente de Morais", "Campos Sales", "Washington Luís"],
-                answer: 2,
-                hintPedagogical: "💡 Dica: Foi o 4º presidente do Brasil (1898-1902) responsável pela criação da engrenagem entre o Presidente e as oligarquias estaduais."
+                keyHash: hash("Campos Sales"),
+                hints: [
+                    "💡 Dica 1: Foi o quarto presidente da República (1898-1902).",
+                    "💡 Dica 2: Ele estabeleceu a troca de favores: o presidente não interferia nos estados se os governadores garantissem bancadas fiéis no Congresso.",
+                    "💡 Dica 3: Seu sobrenome começa com C e S: C______ S____."
+                ]
             },
             {
                 type: "vf",
@@ -431,17 +466,25 @@
                 title: "9. Diversificação Industrial",
                 question: "Durante a República Velha, a indústria manufatureira superava o café em relevância econômica nacional.",
                 options: ["Verdadeiro", "Falso"],
-                answer: 1,
-                hintPedagogical: "💡 Dica: O Brasil era essencialmente agrário e monocultor agroexportador no período da República Velha."
+                keyHash: hash("Falso"),
+                hints: [
+                    "💡 Dica 1: A economia brasileira na Primeira República era fortemente voltada para a exportação de produtos agrícolas.",
+                    "💡 Dica 2: O café correspondia a mais de 60% de todas as exportações do país.",
+                    "💡 Dica 3: A industrialização ainda era incipiente e secundária se comparada ao setor agrário."
+                ]
             },
             {
                 type: "codigo",
                 tag: "Decifre o Código",
                 title: "10. Nome Técnico",
-                question: "Insira a palavra para definir o governo controlado por um pequeno grupo de elite: <br><b>O L I G A R Q U I A</b>",
+                question: "Insira a palavra para definir o governo controlado por um pequeno grupo da elite: <br><b>O L I G A R Q U I A</b>",
                 hint: "Digite o termo:",
-                answer: "OLIGARQUIA",
-                hintPedagogical: "💡 Dica: Vem do grego 'oligos' (poucos) e 'archein' (governar). Significa o governo de poucos."
+                keyHash: hash("OLIGARQUIA"),
+                hints: [
+                    "💡 Dica 1: Termo de origem grega que significa 'governo de poucos'.",
+                    "💡 Dica 2: Refere-se à dominação das famílias proprietárias de terras sobre as instituições políticas.",
+                    "💡 Dica 3: Escreva a palavra sem espaço: O-L-I-G-A-R-Q-U-I-A."
+                ]
             },
             {
                 type: "ordem",
@@ -453,8 +496,12 @@
                     { id: "B", text: "Afonso Pena (1906-1909)" },
                     { id: "C", text: "Washington Luís (1926-1930)" }
                 ],
-                correctOrder: ["1", "2", "3"],
-                hintPedagogical: "💡 Dica: A sequência vai da consolidação da República Oligárquica até o último presidente antes da Revolução de 30."
+                keyHash: hash("1,2,3"),
+                hints: [
+                    "💡 Dica 1: Siga as datas indicadas ao lado dos nomes dos presidentes.",
+                    "💡 Dica 2: A ordem é do mais antigo para o mais recente antes de 1930.",
+                    "💡 Dica 3: A sequência lógica e temporal é: A (1898) -> B (1906) -> C (1926)."
+                ]
             },
             {
                 type: "selecao",
@@ -462,8 +509,12 @@
                 title: "12. Comissão Verificadora",
                 question: "O que era a prática do 'degola' exercida pela Comissão Verificadora de Poderes?",
                 options: ["Execução física de opositores", "Impugnação de diplomas de parlamentares de oposição eleitos", "Censura prévia aos jornais", "Cassação de direitos de cafeicultores"],
-                answer: 1,
-                hintPedagogical: "💡 Dica: Era uma 'degola política': mesmo se um oponente ganhasse a eleição no voto, a Comissão no Congresso não reconhecia sua vitória."
+                keyHash: hash("Impugnação de diplomas de parlamentares de oposição eleitos"),
+                hints: [
+                    "💡 Dica 1: Era um mecanismo político para impedir que candidatos opositores assumissem seus cargos.",
+                    "💡 Dica 2: Mesmo se vencesse nas urnas, o candidato de oposição não recebia o reconhecimento da comissão oficial.",
+                    "💡 Dica 3: 'Degolar' significava cortar o mandato do deputado eleito que desafiasse o governo."
+                ]
             },
             {
                 type: "vf",
@@ -471,17 +522,25 @@
                 title: "13. O Cordeiro e o Cabresto",
                 question: "A prática do voto de cabresto dependia diretamente do sistema de voto secreto estabelecido pela Constituição de 1891.",
                 options: ["Verdadeiro", "Falso"],
-                answer: 1,
-                hintPedagogical: "💡 Dica: Na verdade, o voto era ABERTO! Por isso o coronel sabia exatamente em quem o eleitor estava votando."
+                keyHash: hash("Falso"),
+                hints: [
+                    "💡 Dica 1: Pense como o coronel sabia em quem cada eleitor estava votando.",
+                    "💡 Dica 2: O voto NÃO era secreto na Constituição de 1891; ele era totalmente aberto e declarado verbalmente ou por cédula aberta.",
+                    "💡 Dica 3: Como o voto era público, a afirmação de que existia 'voto secreto' é falsa."
+                ]
             },
             {
                 type: "codigo",
                 tag: "Decifre o Código",
                 title: "14. A Queda Econômica",
-                question: "Decifre o evento internacional que abalou as exportações de café brasileiro: <br><b>C R I S E  D E  1 9 2 9</b>",
-                hint: "Digite o ano da crise:",
-                answer: "1929",
-                hintPedagogical: "💡 Dica: Foi a quebra da Bolsa de Valores de Nova York no final da década de 20."
+                question: "Decifre o ano da crise econômica internacional que abalou as exportações de café brasileiro: <br><b>C R I S E  D E  1 9 2 9</b>",
+                hint: "Digite o ano com quatro dígitos:",
+                keyHash: hash("1929"),
+                hints: [
+                    "💡 Dica 1: Aconteceu no último ano da década de 1920 com o colapso de Nova York.",
+                    "💡 Dica 2: A Grande Depressão teve início neste ano específico de 192_.",
+                    "💡 Dica 3: Digite o número do ano: 1 - 9 - 2 - 9."
+                ]
             },
             {
                 type: "selecao",
@@ -489,8 +548,12 @@
                 title: "15. Tenentismo",
                 question: "Qual movimento militar da década de 1920 contestava a dominação oligárquica e a fraude eleitoral?",
                 options: ["Revolta da Chibata", "Tenentismo", "Canudos", "Balaiada"],
-                answer: 1,
-                hintPedagogical: "💡 Dica: Movimento formado por jovens oficiais do Exército de média patente (tenentes e capitães)."
+                keyHash: hash("Tenentismo"),
+                hints: [
+                    "💡 Dica 1: O movimento era liderado por jovens oficiais de patentes médias do Exército.",
+                    "💡 Dica 2: O nome do movimento deriva diretamente da patente militar de seus integrantes (tenentes).",
+                    "💡 Dica 3: Eles promoveram levantes como os 18 do Forte e a Coluna Prestes."
+                ]
             },
             {
                 type: "vf",
@@ -498,8 +561,12 @@
                 title: "16. A Pecuária Mineira",
                 question: "O termo 'leite' na aliança era simbólico, pois a força econômica de Minas Gerais também vinha fortemente do café e de sua grande bancada eleitoral.",
                 options: ["Verdadeiro", "Falso"],
-                answer: 0,
-                hintPedagogical: "💡 Dica: Minas Gerais também produzia muito café, além de ser o estado mais populoso da época."
+                keyHash: hash("Verdadeiro"),
+                hints: [
+                    "💡 Dica 1: Minas Gerais era um grande produtor agrícola e também o estado mais populoso da época.",
+                    "💡 Dica 2: Embora a produção leiteira fosse expressiva, a bancada mineira também defendia fortemente os interesses do café.",
+                    "💡 Dica 3: A afirmativa é verdadeira; a expressão 'leite' servia para diferenciar a parceria em relação a SP."
+                ]
             },
             {
                 type: "codigo",
@@ -507,8 +574,12 @@
                 title: "17. O Estopim de 1930",
                 question: "Qual o sobrenome do candidato à vice-presidência assassinado em Recife cujo crime serviu de estopim para a Revolução de 1930? <br><b>João _________</b>",
                 hint: "Digite o sobrenome:",
-                answer: "PESSOA",
-                hintPedagogical: "💡 Dica: Ele dá nome à atual capital do estado da Paraíba."
+                keyHash: hash("PESSOA"),
+                hints: [
+                    "💡 Dica 1: Ele era candidato a vice-presidente na chapa da Aliança Liberal ao lado de Getúlio Vargas.",
+                    "💡 Dica 2: Hoje seu sobrenome dá nome à capital do estado da Paraíba.",
+                    "💡 Dica 3: Escreva a palavra P-E-S-S-O-A."
+                ]
             },
             {
                 type: "ordem",
@@ -520,8 +591,12 @@
                     { id: "B", text: "Governador garante eleição de bancadas alinhadas." },
                     { id: "C", text: "Presidente repassa recursos ao governador e ao coronel." }
                 ],
-                correctOrder: ["1", "2", "3"],
-                hintPedagogical: "💡 Dica: Pense de baixo para cima: do voto rural ao governo estadual, chegando ao benefício federal."
+                keyHash: hash("1,2,3"),
+                hints: [
+                    "💡 Dica 1: A teia política começava com a coerção local até chegar aos benefícios federais.",
+                    "💡 Dica 2: 1º Voto obtido localmente -> 2º Eleição da bancada estadual -> 3º Apoio e verbas da Presidência.",
+                    "💡 Dica 3: A sequência do processo é A, B e C (da base municipal ao topo federal)."
+                ]
             },
             {
                 type: "selecao",
@@ -529,8 +604,12 @@
                 title: "19. A 'Reação Republicana'",
                 question: "A campanha da 'Reação Republicana' (1921-1922) tentou quebrar a hegemonia de SP e MG lançando qual candidato?",
                 options: ["Nilo Peçanha", "Getúlio Vargas", "Hermes da Fonseca", "Rui Barbosa"],
-                answer: 0,
-                hintPedagogical: "💡 Dica: Foi o ex-presidente fluminense que tentou unir estados periféricos contra o eixo SP-MG em 1922."
+                keyHash: hash("Nilo Peçanha"),
+                hints: [
+                    "💡 Dica 1: Foi um político fluminense que já havia ocupado a presidência interinamente em 1909.",
+                    "💡 Dica 2: Representou a aliança entre os estados do Rio de Janeiro, Bahia, Pernambuco e Rio Grande do Sul.",
+                    "💡 Dica 3: Seu nome e sobrenome começam com N e P: N___ P______."
+                ]
             },
             {
                 type: "vf",
@@ -538,8 +617,12 @@
                 title: "20. Fraudes Eleitorais",
                 question: "A inclusão de nomes de pessoas falecidas nas listas de votação ('voto dos mortos') era uma fraude comum na época.",
                 options: ["Verdadeiro", "Falso"],
-                answer: 0,
-                hintPedagogical: "💡 Dica: A falta de controle informatizado e a corrupção das mesas de votação permitiam que falecidos 'votassem'."
+                keyHash: hash("Verdadeiro"),
+                hints: [
+                    "💡 Dica 1: Sem documentos com foto e com cartórios locais controlados pelos coronéis, os mortos continuavam 'votando'.",
+                    "💡 Dica 2: As atas eleitorais eram abertamente adulteradas para inflar o número de votos do candidato oficial.",
+                    "💡 Dica 3: A afirmação é verdadeira; o 'voto dos fantasmas/mortos' era uma fraude recorrente."
+                ]
             },
             {
                 type: "codigo",
@@ -547,8 +630,12 @@
                 title: "21. A Capital Federal",
                 question: "Qual era a cidade capital do Brasil durante a Política do Café com Leite? <br><b>R I O  D E  J A N E I R O</b>",
                 hint: "Digite o nome da cidade:",
-                answer: "RIO DE JANEIRO",
-                hintPedagogical: "💡 Dica: Brasília só foi inaugurada em 1960. A capital da Primeira República ficava no Sudeste, no litoral."
+                keyHash: hash("RIO DE JANEIRO"),
+                hints: [
+                    "💡 Dica 1: Brasília ainda não existia no período da República Velha.",
+                    "💡 Dica 2: O Palácio do Catete ficava localizado nesta famosa cidade litorânea do Sudeste.",
+                    "💡 Dica 3: Escreva o nome completo da cidade: RIO DE JANEIRO."
+                ]
             },
             {
                 type: "selecao",
@@ -556,8 +643,12 @@
                 title: "22. Coluna Prestes",
                 question: "A Coluna Prestes percorreu o interior do Brasil protestando contra:",
                 options: ["O domínio da oligarquia agroexportadora e a miséria social", "A imigração europeia no campo", "O Convênio de Taubaté", "A industrialização urbana"],
-                answer: 0,
-                hintPedagogical: "💡 Dica: Marcha militar de oposição que buscava conscientizar a população contra as injustiças e fraudes da República Velha."
+                keyHash: hash("O domínio da oligarquia agroexportadora e a miséria social"),
+                hints: [
+                    "💡 Dica 1: Os rebeldes tenentistas queriam o fim do voto de cabresto e a moralização da política.",
+                    "💡 Dica 2: A marcha percorreu mais de 25 mil quilômetros denunciando a opressão e o analfabetismo no interior.",
+                    "💡 Dica 3: Lutava contra os abusos dos coronéis e os privilégios das elites rurais."
+                ]
             },
             {
                 type: "vf",
@@ -565,8 +656,12 @@
                 title: "23. O Voto Feminino",
                 question: "Apenas após a Revolução de 1930 o voto feminino foi finalmente oficializado no Código Eleitoral de 1932.",
                 options: ["Verdadeiro", "Falso"],
-                answer: 0,
-                hintPedagogical: "💡 Dica: Durante toda a República Velha as mulheres lutaram pelo sufrágio, mas só conquistaram a garantia legal sob Vargas."
+                keyHash: hash("Verdadeiro"),
+                hints: [
+                    "💡 Dica 1: As mulheres lutaram muito durante a Primeira República, mas a legislação eleitoral não permitia seu voto.",
+                    "💡 Dica 2: O sufrágio feminino só foi garantido em âmbito nacional no governo de Getúlio Vargas.",
+                    "💡 Dica 3: É verdadeiro: foi decretado no Código Eleitoral de 1932."
+                ]
             },
             {
                 type: "codigo",
@@ -574,8 +669,12 @@
                 title: "24. O Líder da Revolução",
                 question: "Quem assumiu o poder como chefe do Governo Provisório em 1930? <br><b>Getúlio _________</b>",
                 hint: "Digite o sobrenome:",
-                answer: "VARGAS",
-                hintPedagogical: "💡 Dica: Líder gaúcho que marcou a história brasileira governando o país por mais de 15 anos seguidos."
+                keyHash: hash("VARGAS"),
+                hints: [
+                    "💡 Dica 1: Político gaúcho que pôs fim à hegemonia do Café com Leite.",
+                    "💡 Dica 2: Ele governaria o país posteriormente de 1930 a 1945 e depois de 1951 a 1954.",
+                    "💡 Dica 3: Seu sobrenome é V-A-R-G-A-S."
+                ]
             },
             {
                 type: "selecao",
@@ -583,8 +682,12 @@
                 title: "25. A Revolta dos 18 do Forte",
                 question: "O primeiro grande levante tenentista ocorreu no Forte de Copacabana em qual ano?",
                 options: ["1914", "1922", "1930", "1935"],
-                answer: 1,
-                hintPedagogical: "💡 Dica: Foi no mesmo ano do Centenário da Independência e da Semana de Arte Moderna."
+                keyHash: hash("1922"),
+                hints: [
+                    "💡 Dica 1: Oconteceu no mesmo ano da comemoração do Centenário da Independência do Brasil.",
+                    "💡 Dica 2: Foi o mesmo ano da realização da histórica Semana de Arte Moderna em São Paulo.",
+                    "💡 Dica 3: O ano termina em 22: 1-9-2-2."
+                ]
             },
             {
                 type: "vf",
@@ -592,8 +695,12 @@
                 title: "26. República das Espadas",
                 question: "A República das Espadas (1889-1894) veio DEPOIS da Política do Café com Leite.",
                 options: ["Verdadeiro", "Falso"],
-                answer: 1,
-                hintPedagogical: "💡 Dica: A República das Espadas (Deodoro e Floriano) ocorreu ANTES, inaugurando a Proclamação da República."
+                keyHash: hash("Falso"),
+                hints: [
+                    "💡 Dica 1: Pense em quem governou logo após a Proclamação da República em 1889.",
+                    "💡 Dica 2: Os marechais Deodoro e Floriano Peixoto governaram ANTES da consolidação das oligarquias civis.",
+                    "💡 Dica 3: A afirmação é falsa porque a fase militar inaugurou a República (1889-1894)."
+                ]
             },
             {
                 type: "ordem",
@@ -605,8 +712,12 @@
                     { id: "B", text: "Consolidação da Política do Café com Leite" },
                     { id: "C", text: "Revolução de 1930 e Fim da República Velha" }
                 ],
-                correctOrder: ["1", "2", "3"],
-                hintPedagogical: "💡 Dica: Início com governo militar, consolidação com as oligarquias civis e desfecho com a Revolução de 30."
+                keyHash: hash("1,2,3"),
+                hints: [
+                    "💡 Dica 1: O período inicial foi militar, seguido pelo domínio civil agroexportador e terminado pela revolução.",
+                    "💡 Dica 2: 1ª Espadas (1889-1894) -> 2ª Café com Leite (1894-1930) -> 3ª Revolução de 1930.",
+                    "💡 Dica 3: A ordem cronológica correta é 1-A, 2-B, 3-C."
+                ]
             },
             {
                 type: "selecao",
@@ -614,8 +725,12 @@
                 title: "28. O Cliente Político",
                 question: "A troca ilícita de favores pessoais entre o coronel e os eleitores (como remédios, empregos e sapatos) é conhecida como:",
                 options: ["Clientelismo", "Feudalismo", "Anarquismo", "Comunismo"],
-                answer: 0,
-                hintPedagogical: "💡 Dica: Vem de 'cliente', a pessoa subordinada que recebe proteção e benesses em troca de lealdade política."
+                keyHash: hash("Clientelismo"),
+                hints: [
+                    "💡 Dica 1: Termo derivado de 'cliente', a pessoa que recebe proteção em troca de dependência.",
+                    "💡 Dica 2: Prática onde bens públicos ou favores privados são concedidos em troca do voto.",
+                    "💡 Dica 3: A palavra começa com C-L-I-E-N-T-E-L-I-S-M-O."
+                ]
             },
             {
                 type: "vf",
@@ -623,8 +738,12 @@
                 title: "29. Queima do Café",
                 question: "Durante a crise pós-1929, o governo brasileiro chegou a queimar e estocar milhões de sacas de café para sustentar o preço do produto.",
                 options: ["Verdadeiro", "Falso"],
-                answer: 0,
-                hintPedagogical: "💡 Dica: Destruía-se o excesso da mercadoria para diminuir a oferta no mercado e forçar a subida do preço."
+                keyHash: hash("Verdadeiro"),
+                hints: [
+                    "💡 Dica 1: Como a oferta mundial era enorme e ninguém comprava, o produto sobrava nos portos.",
+                    "💡 Dica 2: Milhares de sacas foram incineradas ou jogadas no mar para forçar a escassez do produto.",
+                    "💡 Dica 3: A afirmativa é verdadeira; tratava-se de uma estratégia para tentar estabilizar o valor do café."
+                ]
             },
             {
                 type: "codigo",
@@ -632,19 +751,26 @@
                 title: "30. A Senha do Cofre",
                 question: "Digite o produto símbolo da economia brasileira da Primeira República: <br><b>☕ C A F E</b>",
                 hint: "Digite a palavra:",
-                answer: "CAFE",
-                hintPedagogical: "💡 Dica: É a bebida escura mais famosa das fazendas paulistas!"
+                keyHash: hash("CAFE"),
+                hints: [
+                    "💡 Dica 1: É a bebida quente mais consumida do Brasil, cultivada no Vale do Paraíba e Oeste Paulista.",
+                    "💡 Dica 2: O principal produto de exportação nacional na época.",
+                    "💡 Dica 3: A palavra secreta do cofre é C-A-F-E."
+                ]
             }
         ];
 
-        // VARIÁVEIS DE CONTROLE
+        // VARIÁVEIS DE CONTROLE E ESTADO
         let groupName = "";
         let groupMembers = "";
         let errorCount = 0;
         let currentQ = 0;
-        let timeLeft = 40 * 60; // 40 minutos
+        let timeLeft = 40 * 60;
         let timerInterval;
         let startTime;
+        
+        // Rastreio de erros por pergunta para alternar dicas
+        let questionErrors = Array(questions.length).fill(0);
 
         function startGame() {
             groupName = document.getElementById("group-name").value.trim();
@@ -701,8 +827,8 @@
 
             if (q.type === "selecao" || q.type === "vf") {
                 html += `<div class="options-grid">`;
-                q.options.forEach((opt, idx) => {
-                    html += `<button class="option-btn" onclick="checkChoice(${idx})">${opt}</button>`;
+                q.options.forEach((opt) => {
+                    html += `<button class="option-btn" onclick="checkAnswer('${encodeURIComponent(opt)}')">${opt}</button>`;
                 });
                 html += `</div>`;
             } else if (q.type === "codigo") {
@@ -737,11 +863,17 @@
 
         function triggerError() {
             errorCount++;
+            questionErrors[currentQ]++;
             document.getElementById("error-display").innerText = `❌ Erros: ${errorCount}`;
+            
             const fb = document.getElementById("feedback-box");
             const q = questions[currentQ];
             
-            fb.innerHTML = `❌ Resposta Incorreta!<br><br>${q.hintPedagogical}`;
+            // Seleciona a dica atual em rotação (ciclo do array de hints)
+            let hintIndex = (questionErrors[currentQ] - 1) % q.hints.length;
+            let currentHint = q.hints[hintIndex];
+            
+            fb.innerHTML = `❌ Resposta Incorreta! (Tentativa ${questionErrors[currentQ]})<br><br>${currentHint}`;
             fb.className = "feedback error";
         }
 
@@ -760,8 +892,9 @@
             }, 800);
         }
 
-        function checkChoice(idx) {
-            if (idx === questions[currentQ].answer) {
+        function checkAnswer(selectedOpt) {
+            const decoded = decodeURIComponent(selectedOpt);
+            if (hash(decoded) === questions[currentQ].keyHash) {
                 triggerSuccess();
             } else {
                 triggerError();
@@ -769,11 +902,8 @@
         }
 
         function checkCode() {
-            const val = document.getElementById("code-input").value.trim().toUpperCase();
-            const cleanVal = val.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-            const cleanAns = questions[currentQ].answer.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-
-            if (cleanVal === cleanAns) {
+            const val = document.getElementById("code-input").value;
+            if (hash(val) === questions[currentQ].keyHash) {
                 triggerSuccess();
             } else {
                 triggerError();
@@ -788,9 +918,8 @@
                 userOrder.push(val);
             }
 
-            let isCorrect = userOrder.every((val, index) => val === q.correctOrder[index]);
-
-            if (isCorrect) {
+            let orderString = userOrder.join(",");
+            if (hash(orderString) === q.keyHash) {
                 triggerSuccess();
             } else {
                 triggerError();
