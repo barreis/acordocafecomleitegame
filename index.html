@@ -196,7 +196,6 @@
             color: #FFF;
         }
 
-        /* Select / Order inputs */
         .order-list {
             list-style: none;
             padding: 0;
@@ -223,11 +222,12 @@
 
         .feedback {
             margin-top: 15px;
-            padding: 10px;
+            padding: 12px;
             border-radius: 6px;
             font-weight: bold;
             text-align: center;
             display: none;
+            line-height: 1.4;
         }
 
         .feedback.error {
@@ -246,24 +246,29 @@
 
         .stats-box {
             background-color: var(--yellow-crema);
-            padding: 15px;
-            border-radius: 8px;
+            padding: 18px;
+            border-radius: 10px;
             margin: 20px 0;
             text-align: left;
-            border: 1px dashed var(--gold-amber);
+            border: 2px solid var(--gold-amber);
         }
 
-        .email-preview {
-            background: #222;
-            color: #0f0;
-            font-family: monospace;
-            padding: 12px;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            text-align: left;
-            margin-bottom: 20px;
-            max-height: 120px;
-            overflow-y: auto;
+        .instruction-card {
+            background-color: #FFF3CD;
+            border: 2px dashed #856404;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .instruction-card span {
+            color: var(--error-red);
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -289,8 +294,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="group-members">Integrantes do Grupo:</label>
-                        <input type="text" id="group-members" placeholder="Ex: Ana, Beatriz, Carlos, Daniel">
+                        <label for="group-members">Integrantes do Grupo (Nomes completos):</label>
+                        <input type="text" id="group-members" placeholder="Ex: Ana Souza, Beatriz Silva, Carlos Lima, Daniel Santos">
                     </div>
 
                     <button class="btn" onclick="startGame()">Iniciar Desafio (40 Minutos)</button>
@@ -313,21 +318,28 @@
                 <div id="feedback-box" class="feedback"></div>
             </div>
 
-            <!-- TELA DE VITÓRIA -->
+            <!-- TELA DE VITÓRIA / COMPROVANTE PARA PRINT -->
             <div id="screen-victory" class="screen">
                 <div style="text-align: center;">
                     <h2 style="color: var(--success-green); font-size: 2rem;">🎉 Cofre Aberto com Sucesso!</h2>
                     <p>Vocês dominaram todos os marcos da Política do Café com Leite!</p>
                     
                     <div class="stats-box">
+                        <p style="font-size: 1.1rem; margin-bottom: 10px; color: var(--accent-coffee);"><strong>📌 COMPROVANTE DE CONCLUSÃO DA ATIVIDADE</strong></p>
+                        <hr style="border: 0; border-top: 1px solid var(--gold-amber); margin-bottom: 12px;">
                         <p><strong>Grupo:</strong> <span id="res-group"></span></p>
-                        <p><strong>Membros:</strong> <span id="res-members"></span></p>
+                        <p><strong>Integrantes:</strong> <span id="res-members"></span></p>
                         <p><strong>Total de Erros:</strong> <span id="res-errors"></span></p>
-                        <p><strong>Tempo Restante:</strong> <span id="res-time"></span></p>
+                        <p><strong>Tempo Total Utilizado:</strong> <span id="res-time"></span></p>
+                        <p><strong>Status:</strong> <span style="color: var(--success-green); font-weight: bold;">30 / 30 Questões Concluídas</span></p>
                     </div>
 
-                    <button class="btn" onclick="sendEmailReport()" style="background-color: var(--success-green);">Enviar Relatório para a Professora Bárbara</button>
-                    <div class="email-preview" id="email-preview-text" style="margin-top: 15px;"></div>
+                    <div class="instruction-card">
+                        📸 <span>ATENÇÃO GRUPO!</span><br>
+                        Tirem um <strong>PRINT DESTE COMPROVANTE</strong> e enviem para o e-mail:<br>
+                        <strong style="font-size: 1.1rem; color: #2B1810;">barbara.santos03@cps.sp.gov.br</strong><br>
+                        <em>A identificação dos membros e a quantidade de erros são obrigatórias para a validação do visto da atividade!</em>
+                    </div>
                 </div>
             </div>
 
@@ -335,36 +347,35 @@
     </div>
 
     <script>
-        // BANCO DE DADOS COM AS 30 PERGUNTAS DIVERSIFICADAS
+        // BANCO DE DADOS COM AS 30 PERGUNTAS E DICAS PEDAGÓGICAS
         const questions = [
-            // 1. Seleção
             {
                 type: "selecao",
                 tag: "Seleção Múltipla",
                 title: "1. A Base Agroexportadora",
                 question: "Quais eram os dois estados protagonistas da Política do Café com Leite na República Velha?",
                 options: ["São Paulo e Rio de Janeiro", "São Paulo e Minas Gerais", "Minas Gerais e Rio Grande do Sul", "Bahia e Pernambuco"],
-                answer: 1
+                answer: 1,
+                hintPedagogical: "💡 Dica: Lembre-se de qual estado era o maior produtor de café e qual era o estado de maior eleitorado e forte produção leiteira/cafeira!"
             },
-            // 2. Verdadeiro ou Falso
             {
                 type: "vf",
                 tag: "Verdadeiro ou Falso",
                 title: "2. Sufrágio na República Velha",
                 question: "A Constituição de 1891 garantiu o direito de voto aos analfabetos e às mulheres.",
                 options: ["Verdadeiro", "Falso"],
-                answer: 1 // Falso
+                answer: 1,
+                hintPedagogical: "💡 Dica: A Constituição de 1891 excluía expressamente analfabetos, mulheres, soldados e membros de ordens religiosas da votação."
             },
-            // 3. Código
             {
                 type: "codigo",
                 tag: "Decifre o Código",
                 title: "3. O Domínio Local",
-                question: "Decifre a palavra-chave (Dica: Prática coercitiva dos chefes políticos locais sobre os eleitores rurais): <br><br><b>C - O - R - O - N - E - L - I - S - M - O</b>",
+                question: "Decifre a palavra-chave (Prática coercitiva dos chefes políticos locais sobre os eleitores rurais): <br><br><b>C - O - R - O - N - E - L - I - S - M - O</b>",
                 hint: "Digite o termo exatamente:",
-                answer: "CORONELISMO"
+                answer: "CORONELISMO",
+                hintPedagogical: "💡 Dica: É o sistema baseado na liderança do fazendeiro (coronel) que trocava favores por votos no âmbito municipal."
             },
-            // 4. Ordenação
             {
                 type: "ordem",
                 tag: "Colocar na Ordem",
@@ -375,253 +386,254 @@
                     { id: "B", text: "Minas Gerais se alia ao RS e à Paraíba (Aliança Liberal)." },
                     { id: "C", text: "Eclode a Revolução de 1930 e Getúlio Vargas assume o poder." }
                 ],
-                correctOrder: ["1", "2", "3"]
+                correctOrder: ["1", "2", "3"],
+                hintPedagogical: "💡 Dica: Primeiro veio a quebra do acordo por SP, depois a reação/oposição de MG e, por fim, a tomada de poder violenta."
             },
-            // 5. Seleção
             {
                 type: "selecao",
                 tag: "Seleção Múltipla",
                 title: "5. Voto Aberto",
                 question: "Como era chamado o voto vigiado e fraudado controlado pelos coronéis?",
                 options: ["Voto Secreto", "Voto de Cabresto", "Voto Censitário", "Voto Direto"],
-                answer: 1
+                answer: 1,
+                hintPedagogical: "💡 Dica: O termo faz analogia à rédea de couro usada nos animais de carga para guiá-los à força."
             },
-            // 6. VF
             {
                 type: "vf",
                 tag: "Verdadeiro ou Falso",
                 title: "6. Convênio de Taubaté (1906)",
                 question: "O Convênio de Taubaté foi um acordo em que o Estado comprava o excedente de café para manter os preços altos no mercado internacional.",
                 options: ["Verdadeiro", "Falso"],
-                answer: 0
+                answer: 0,
+                hintPedagogical: "💡 Dica: O governo usava empréstimos estrangeiros para estocar sementes de café e impedir que a superprodução derrubasse os preços."
             },
-            // 7. Código
             {
                 type: "codigo",
                 tag: "Decifre o Código",
                 title: "7. A Oposição Política",
                 question: "Complete o código com a coligação opositora formada em 1929: <br><b>ALIANÇA _________</b>",
                 hint: "Digite a palavra faltante:",
-                answer: "LIBERAL"
+                answer: "LIBERAL",
+                hintPedagogical: "💡 Dica: Esta frente uniu Minas Gerais, Rio Grande do Sul e Paraíba para lançar Getúlio Vargas à presidência."
             },
-            // 8. Seleção
             {
                 type: "selecao",
                 tag: "Seleção Múltipla",
                 title: "8. Política dos Governadores",
                 question: "Quem foi o presidente que idealizou a 'Política dos Governadores' para harmonizar o poder federal e estadual?",
                 options: ["Deodoro da Fonseca", "Prudente de Morais", "Campos Sales", "Washington Luís"],
-                answer: 2
+                answer: 2,
+                hintPedagogical: "💡 Dica: Foi o 4º presidente do Brasil (1898-1902) responsável pela criação da engrenagem entre o Presidente e as oligarquias estaduais."
             },
-            // 9. VF
             {
                 type: "vf",
                 tag: "Verdadeiro ou Falso",
                 title: "9. Diversificação Industrial",
                 question: "Durante a República Velha, a indústria manufatureira superava o café em relevância econômica nacional.",
                 options: ["Verdadeiro", "Falso"],
-                answer: 1
+                answer: 1,
+                hintPedagogical: "💡 Dica: O Brasil era essencialmente agrário e monocultor agroexportador no período da República Velha."
             },
-            // 10. Código
             {
                 type: "codigo",
                 tag: "Decifre o Código",
                 title: "10. Nome Técnico",
-                question: "Insira a palavra para definir o governo controlado por um pequeno grupo de oligarcas: <br><b>O L I G A R Q U I A</b>",
+                question: "Insira a palavra para definir o governo controlado por um pequeno grupo de elite: <br><b>O L I G A R Q U I A</b>",
                 hint: "Digite o termo:",
-                answer: "OLIGARQUIA"
+                answer: "OLIGARQUIA",
+                hintPedagogical: "💡 Dica: Vem do grego 'oligos' (poucos) e 'archein' (governar). Significa o governo de poucos."
             },
-            // 11. Ordenação
             {
                 type: "ordem",
                 tag: "Colocar na Ordem",
                 title: "11. Presidentes da Era Café com Leite",
                 question: "Ordene cronologicamente os mandatos presidenciais (1, 2, 3):",
                 items: [
-                    { id: "A", text: "Campos Sales" },
-                    { id: "B", text: "Afonso Pena" },
-                    { id: "C", text: "Washington Luís" }
+                    { id: "A", text: "Campos Sales (1898-1902)" },
+                    { id: "B", text: "Afonso Pena (1906-1909)" },
+                    { id: "C", text: "Washington Luís (1926-1930)" }
                 ],
-                correctOrder: ["1", "2", "3"]
+                correctOrder: ["1", "2", "3"],
+                hintPedagogical: "💡 Dica: A sequência vai da consolidação da República Oligárquica até o último presidente antes da Revolução de 30."
             },
-            // 12. Seleção
             {
                 type: "selecao",
                 tag: "Seleção Múltipla",
                 title: "12. Comissão Verificadora",
                 question: "O que era a prática do 'degola' exercida pela Comissão Verificadora de Poderes?",
                 options: ["Execução física de opositores", "Impugnação de diplomas de parlamentares de oposição eleitos", "Censura prévia aos jornais", "Cassação de direitos de cafeicultores"],
-                answer: 1
+                answer: 1,
+                hintPedagogical: "💡 Dica: Era uma 'degola política': mesmo se um oponente ganhasse a eleição no voto, a Comissão no Congresso não reconhecia sua vitória."
             },
-            // 13. VF
             {
                 type: "vf",
                 tag: "Verdadeiro ou Falso",
                 title: "13. O Cordeiro e o Cabresto",
                 question: "A prática do voto de cabresto dependia diretamente do sistema de voto secreto estabelecido pela Constituição de 1891.",
                 options: ["Verdadeiro", "Falso"],
-                answer: 1
+                answer: 1,
+                hintPedagogical: "💡 Dica: Na verdade, o voto era ABERTO! Por isso o coronel sabia exatamente em quem o eleitor estava votando."
             },
-            // 14. Código
             {
                 type: "codigo",
                 tag: "Decifre o Código",
                 title: "14. A Queda Econômica",
-                question: "Decifre o evento internacional de 1929 que abalou as exportações de café brasileiro: <br><b>C R I S E  D E  1 9 2 9</b>",
+                question: "Decifre o evento internacional que abalou as exportações de café brasileiro: <br><b>C R I S E  D E  1 9 2 9</b>",
                 hint: "Digite o ano da crise:",
-                answer: "1929"
+                answer: "1929",
+                hintPedagogical: "💡 Dica: Foi a quebra da Bolsa de Valores de Nova York no final da década de 20."
             },
-            // 15. Seleção
             {
                 type: "selecao",
                 tag: "Seleção Múltipla",
                 title: "15. Tenentismo",
-                question: "Qual movimento militar da década de 1920 contestava a dominação oligárquica e o fraude eleitoral?",
+                question: "Qual movimento militar da década de 1920 contestava a dominação oligárquica e a fraude eleitoral?",
                 options: ["Revolta da Chibata", "Tenentismo", "Canudos", "Balaiada"],
-                answer: 1
+                answer: 1,
+                hintPedagogical: "💡 Dica: Movimento formado por jovens oficiais do Exército de média patente (tenentes e capitães)."
             },
-            // 16. VF
             {
                 type: "vf",
                 tag: "Verdadeiro ou Falso",
                 title: "16. A Pecuária Mineira",
                 question: "O termo 'leite' na aliança era simbólico, pois a força econômica de Minas Gerais também vinha fortemente do café e de sua grande bancada eleitoral.",
                 options: ["Verdadeiro", "Falso"],
-                answer: 0
+                answer: 0,
+                hintPedagogical: "💡 Dica: Minas Gerais também produzia muito café, além de ser o estado mais populoso da época."
             },
-            // 17. Código
             {
                 type: "codigo",
                 tag: "Decifre o Código",
                 title: "17. O Estopim de 1930",
                 question: "Qual o sobrenome do candidato à vice-presidência assassinado em Recife cujo crime serviu de estopim para a Revolução de 1930? <br><b>João _________</b>",
                 hint: "Digite o sobrenome:",
-                answer: "PESSOA"
+                answer: "PESSOA",
+                hintPedagogical: "💡 Dica: Ele dá nome à atual capital do estado da Paraíba."
             },
-            // 18. Ordenação
             {
                 type: "ordem",
                 tag: "Colocar na Ordem",
                 title: "18. Encadeamento da Fraude",
                 question: "Ordene a cadeia de dependência eleitoral (1, 2, 3):",
                 items: [
-                    { id: "A", text: "Coronel coagir eleitores no município." },
-                    { id: "B", text: "Governador do estado garante bancada no Congresso." },
-                    { id: "C", text: "Presidente repassa verbas e favores ao estado e ao coronel." }
+                    { id: "A", text: "Coronel coage os eleitores no município." },
+                    { id: "B", text: "Governador garante eleição de bancadas alinhadas." },
+                    { id: "C", text: "Presidente repassa recursos ao governador e ao coronel." }
                 ],
-                correctOrder: ["1", "2", "3"]
+                correctOrder: ["1", "2", "3"],
+                hintPedagogical: "💡 Dica: Pense de baixo para cima: do voto rural ao governo estadual, chegando ao benefício federal."
             },
-            // 19. Seleção
             {
                 type: "selecao",
                 tag: "Seleção Múltipla",
                 title: "19. A 'Reação Republicana'",
                 question: "A campanha da 'Reação Republicana' (1921-1922) tentou quebrar a hegemonia de SP e MG lançando qual candidato?",
                 options: ["Nilo Peçanha", "Getúlio Vargas", "Hermes da Fonseca", "Rui Barbosa"],
-                answer: 0
+                answer: 0,
+                hintPedagogical: "💡 Dica: Foi o ex-presidente fluminense que tentou unir estados periféricos contra o eixo SP-MG em 1922."
             },
-            // 20. VF
             {
                 type: "vf",
                 tag: "Verdadeiro ou Falso",
                 title: "20. Fraudes Eleitorais",
                 question: "A inclusão de nomes de pessoas falecidas nas listas de votação ('voto dos mortos') era uma fraude comum na época.",
                 options: ["Verdadeiro", "Falso"],
-                answer: 0
+                answer: 0,
+                hintPedagogical: "💡 Dica: A falta de controle informatizado e a corrupção das mesas de votação permitiam que falecidos 'votassem'."
             },
-            // 21. Código
             {
                 type: "codigo",
                 tag: "Decifre o Código",
                 title: "21. A Capital Federal",
                 question: "Qual era a cidade capital do Brasil durante a Política do Café com Leite? <br><b>R I O  D E  J A N E I R O</b>",
                 hint: "Digite o nome da cidade:",
-                answer: "RIO DE JANEIRO"
+                answer: "RIO DE JANEIRO",
+                hintPedagogical: "💡 Dica: Brasília só foi inaugurada em 1960. A capital da Primeira República ficava no Sudeste, no litoral."
             },
-            // 22. Seleção
             {
                 type: "selecao",
                 tag: "Seleção Múltipla",
                 title: "22. Coluna Prestes",
                 question: "A Coluna Prestes percorreu o interior do Brasil protestando contra:",
                 options: ["O domínio da oligarquia agroexportadora e a miséria social", "A imigração europeia no campo", "O Convênio de Taubaté", "A industrialização urbana"],
-                answer: 0
+                answer: 0,
+                hintPedagogical: "💡 Dica: Marcha militar de oposição que buscava conscientizar a população contra as injustiças e fraudes da República Velha."
             },
-            // 23. VF
             {
                 type: "vf",
                 tag: "Verdadeiro ou Falso",
                 title: "23. O Voto Feminino",
                 question: "Apenas após a Revolução de 1930 o voto feminino foi finalmente oficializado no Código Eleitoral de 1932.",
                 options: ["Verdadeiro", "Falso"],
-                answer: 0
+                answer: 0,
+                hintPedagogical: "💡 Dica: Durante toda a República Velha as mulheres lutaram pelo sufrágio, mas só conquistaram a garantia legal sob Vargas."
             },
-            // 24. Código
             {
                 type: "codigo",
                 tag: "Decifre o Código",
-                title: "24. O Lider da Revolução",
+                title: "24. O Líder da Revolução",
                 question: "Quem assumiu o poder como chefe do Governo Provisório em 1930? <br><b>Getúlio _________</b>",
                 hint: "Digite o sobrenome:",
-                answer: "VARGAS"
+                answer: "VARGAS",
+                hintPedagogical: "💡 Dica: Líder gaúcho que marcou a história brasileira governando o país por mais de 15 anos seguidos."
             },
-            // 25. Seleção
             {
                 type: "selecao",
                 tag: "Seleção Múltipla",
                 title: "25. A Revolta dos 18 do Forte",
                 question: "O primeiro grande levante tenentista ocorreu no Forte de Copacabana em qual ano?",
                 options: ["1914", "1922", "1930", "1935"],
-                answer: 1
+                answer: 1,
+                hintPedagogical: "💡 Dica: Foi no mesmo ano do Centenário da Independência e da Semana de Arte Moderna."
             },
-            // 26. VF
             {
                 type: "vf",
                 tag: "Verdadeiro ou Falso",
                 title: "26. República das Espadas",
                 question: "A República das Espadas (1889-1894) veio DEPOIS da Política do Café com Leite.",
                 options: ["Verdadeiro", "Falso"],
-                answer: 1
+                answer: 1,
+                hintPedagogical: "💡 Dica: A República das Espadas (Deodoro e Floriano) ocorreu ANTES, inaugurando a Proclamação da República."
             },
-            // 27. Ordenação
             {
                 type: "ordem",
                 tag: "Colocar na Ordem",
                 title: "27. Fases da Primeira República",
                 question: "Ordene as fases históricas (1, 2, 3):",
                 items: [
-                    { id: "A", text: "República das Espadas (Governos Militares)" },
+                    { id: "A", text: "República das Espadas (Militar)" },
                     { id: "B", text: "Consolidação da Política do Café com Leite" },
                     { id: "C", text: "Revolução de 1930 e Fim da República Velha" }
                 ],
-                correctOrder: ["1", "2", "3"]
+                correctOrder: ["1", "2", "3"],
+                hintPedagogical: "💡 Dica: Início com governo militar, consolidação com as oligarquias civis e desfecho com a Revolução de 30."
             },
-            // 28. Seleção
             {
                 type: "selecao",
                 tag: "Seleção Múltipla",
                 title: "28. O Cliente Político",
-                question: "A troca de favores entre o coronel e os eleitores (empregos, remédios, proteção) é chamada de:",
+                question: "A troca ilícita de favores pessoais entre o coronel e os eleitores (como remédios, empregos e sapatos) é conhecida como:",
                 options: ["Clientelismo", "Feudalismo", "Anarquismo", "Comunismo"],
-                answer: 0
+                answer: 0,
+                hintPedagogical: "💡 Dica: Vem de 'cliente', a pessoa subordinada que recebe proteção e benesses em troca de lealdade política."
             },
-            // 29. VF
             {
                 type: "vf",
                 tag: "Verdadeiro ou Falso",
                 title: "29. Queima do Café",
                 question: "Durante a crise pós-1929, o governo brasileiro chegou a queimar e estocar milhões de sacas de café para sustentar o preço do produto.",
                 options: ["Verdadeiro", "Falso"],
-                answer: 0
+                answer: 0,
+                hintPedagogical: "💡 Dica: Destruía-se o excesso da mercadoria para diminuir a oferta no mercado e forçar a subida do preço."
             },
-            // 30. Código
             {
                 type: "codigo",
                 tag: "Decifre o Código Final",
                 title: "30. A Senha do Cofre",
-                question: "Digite a palavra secreta para selar o cofre da memória republicana: <br><b>☕ C A F E</b>",
+                question: "Digite o produto símbolo da economia brasileira da Primeira República: <br><b>☕ C A F E</b>",
                 hint: "Digite a palavra:",
-                answer: "CAFE"
+                answer: "CAFE",
+                hintPedagogical: "💡 Dica: É a bebida escura mais famosa das fazendas paulistas!"
             }
         ];
 
@@ -723,17 +735,19 @@
             container.innerHTML = html;
         }
 
-        function triggerError(msg) {
+        function triggerError() {
             errorCount++;
             document.getElementById("error-display").innerText = `❌ Erros: ${errorCount}`;
             const fb = document.getElementById("feedback-box");
-            fb.innerText = msg || "Resposta Incorreta! Tente novamente.";
+            const q = questions[currentQ];
+            
+            fb.innerHTML = `❌ Resposta Incorreta!<br><br>${q.hintPedagogical}`;
             fb.className = "feedback error";
         }
 
         function triggerSuccess() {
             const fb = document.getElementById("feedback-box");
-            fb.innerText = "Correto! Avançando...";
+            fb.innerText = "✨ Resposta Correta! Avançando para o próximo enigma...";
             fb.className = "feedback success";
             
             setTimeout(() => {
@@ -750,20 +764,19 @@
             if (idx === questions[currentQ].answer) {
                 triggerSuccess();
             } else {
-                triggerError("Opção incorreta! Revise o conceito histórico.");
+                triggerError();
             }
         }
 
         function checkCode() {
             const val = document.getElementById("code-input").value.trim().toUpperCase();
-            // Normalizar acentos
             const cleanVal = val.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
             const cleanAns = questions[currentQ].answer.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
             if (cleanVal === cleanAns) {
                 triggerSuccess();
             } else {
-                triggerError("Código/Palavra incorreta! Tente novamente.");
+                triggerError();
             }
         }
 
@@ -780,7 +793,7 @@
             if (isCorrect) {
                 triggerSuccess();
             } else {
-                triggerError("Ordem cronológica incorreta! Reorganize a sequência.");
+                triggerError();
             }
         }
 
@@ -798,26 +811,6 @@
             document.getElementById("res-members").innerText = groupMembers;
             document.getElementById("res-errors").innerText = errorCount;
             document.getElementById("res-time").innerText = timeFormatted;
-
-            const emailBody = `RELATÓRIO DE ESCAPE ROOM - CAFÉ COM LEITE\n` +
-                              `========================================\n` +
-                              `Grupo: ${groupName}\n` +
-                              `Integrantes: ${groupMembers}\n` +
-                              `Total de Erros: ${errorCount}\n` +
-                              `Tempo Total Utilizado: ${timeFormatted}\n` +
-                              `Perguntas Concluídas: 30 / 30\n` +
-                              `========================================`;
-
-            document.getElementById("email-preview-text").innerText = emailBody;
-            window.finalEmailBody = emailBody;
-        }
-
-        function sendEmailReport() {
-            const recipient = "prof.barbaravitoria@gmail.com";
-            const subject = encodeURIComponent(`Escape Room História - Grupo: ${groupName}`);
-            const body = encodeURIComponent(window.finalEmailBody);
-            
-            window.location.href = `mailto:${recipient}?subject=${subject}&body=${body}`;
         }
     </script>
 </body>
