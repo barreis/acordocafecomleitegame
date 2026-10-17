@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O Cofre da República: Enigma do Café com Leite</title>
+    <style>
+        :root {
+            --bg-espresso: #2B1810;
+            --card-latte: #FDFBF7;
+            --accent-coffee: #6F4E37;
+            --gold-amber: #D4A373;
+            --yellow-crema: #FAEDCD;
+            --text-dark: #38220F;
+            --error-red: #A4243B;
+            --success-green: #2B6638;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-espresso);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background-image: radial-gradient(circle, #3d2317 0%, #2B1810 100%);
+        }
+
+        .container {
+            background-color: var(--card-latte);
+            width: 100%;
+            max-width: 750px;
+            border-radius: 16px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
+            overflow: hidden;
+            border: 3px solid var(--gold-amber);
+        }
+
+        header {
+            background: linear-gradient(135deg, #4A2E1B, #2B1810);
+            color: var(--yellow-crema);
+            padding: 25px;
+            text-align: center;
+            border-bottom: 4px solid var(--gold-amber);
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+            color: #FFD166;
+        }
+
+        header p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        /* Form & Inputs */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: var(--accent-coffee);
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--gold-amber);
+            border-radius: 8px;
+            font-size: 1rem;
+            background-color: #FFF;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--accent-coffee);
+            box-shadow: 0 0 5px rgba(212, 163, 115, 0.5);
+        }
+
+        /* Buttons */
+        .btn {
+            background-color: var(--accent-coffee);
+            color: var(--yellow-crema);
+            border: none;
+            padding: 12px 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s, transform 0.1s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+        }
+
+        .btn:hover {
+            background-color: #583B28;
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        /* Game HUD */
+        .hud {
+            display: flex;
+            justify-content: space-between;
+            background-color: var(--yellow-crema);
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            font-weight: bold;
+            border: 1px solid var(--gold-amber);
+            color: var(--accent-coffee);
+        }
+
+        .puzzle-box {
+            background: #FFF;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 6px solid var(--gold-amber);
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .puzzle-box h3 {
+            color: var(--accent-coffee);
+            margin-bottom: 10px;
+        }
+
+        .options-grid {
+            display: grid;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .option-btn {
+            background-color: #F4EAD2;
+            border: 2px solid var(--gold-amber);
+            padding: 12px;
+            text-align: left;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            transition: all 0.2s;
+        }
+
+        .option-btn:hover {
+            background-color: var(--gold-amber);
+            color: #FFF;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            text-align: center;
+            display: none;
+        }
+
+        .feedback.error {
+            background-color: #F8D7DA;
+            color: var(--error-red);
+            border: 1px solid #F5C6CB;
+            display: block;
+        }
+
+        .feedback.success {
+            background-color: #D4EDDA;
+            color: var(--success-green);
+            border: 1px solid #C3E6CB;
+            display: block;
+        }
+
+        /* Victory Screen */
+        .victory-card {
+            text-align: center;
+        }
+
+        .victory-card h2 {
+            color: var(--success-green);
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .stats-box {
+            background-color: var(--yellow-crema);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: left;
+            border: 1px dashed var(--gold-amber);
+        }
+
+        .stats-box p {
+            margin: 8px 0;
+            font-size: 1.05rem;
+        }
+
+        .email-preview {
+            background: #222;
+            color: #0f0;
+            font-family: monospace;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            text-align: left;
+            margin-bottom: 20px;
+            max-height: 120px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>☕ O Cofre da República</h1>
+            <p>Escape Room Histórico • A Política do Café com Leite</p>
+        </header>
+
+        <div class="content">
+
+            <!-- TELA 1: CADASTRO -->
+            <div id="screen-register" class="screen active">
+                <div class="puzzle-box">
+                    <h3>Identificação do Grupo</h3>
+                    <p style="margin-bottom: 15px; font-size: 0.95rem;">Preencha os dados abaixo para iniciar a missão cronometrada de 40 minutos.</p>
+                    
+                    <div class="form-group">
+                        <label for="group-name">Nome do Grupo:</label>
+                        <input type="text" id="group-name" placeholder="Ex: Oligarquia Insurreta">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="group-members">Nome dos Membros (separados por vírgula):</label>
+                        <input type="text" id="group-members" placeholder="Ex: Ana, Beatriz, Carlos, Daniel">
+                    </div>
+
+                    <button class="btn" onclick="startGame()">Desbloquear o Primeiro Desafio</button>
+                </div>
+            </div>
+
+            <!-- TELA 2: O JOGO / DESAFIOS -->
+            <div id="screen-game" class="screen">
+                <div class="hud">
+                    <span id="timer-display">⏱️ Tempo: 40:00</span>
+                    <span id="error-display">❌ Erros: 0</span>
+                </div>
+
+                <!-- Desafio 1 -->
+                <div id="challenge-1" class="challenge-stage">
+                    <div class="puzzle-box">
+                        <h3>Desafio 1: A Aliança das Oligarquias</h3>
+                        <p>Na República Velha (1894-1930), a política nacional era dominada por um pacto entre dois estados produtores fundamentais da economia agroexportadora. Qual alternativa define corretamente essa engrenagem?</p>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="checkAnswer(1, false)">A) Aliança entre o Rio Grande do Sul (pecuária) e o Rio de Janeiro (café).</button>
+                            <button class="option-btn" onclick="checkAnswer(1, true)">B) Alternância de poder entre São Paulo (café) e Minas Gerais (leite).</button>
+                            <button class="option-btn" onclick="checkAnswer(1, false)">C) Acordo industrial entre São Paulo e Bahia voltado para a borracha.</button>
+                        </div>
+                        <div id="feedback-1" class="feedback"></div>
+                    </div>
+                </div>
+
+                <!-- Desafio 2 -->
+                <div id="challenge-2" class="challenge-stage" style="display: none;">
+                    <div class="puzzle-box">
+                        <h3>Desafio 2: O Mecanismo de Controle Eleitoral</h3>
+                        <p>O poder dos grandes proprietários de terras nas zonas rurais garantia a vitória dos candidatos oficiais através de fraudes e coerção física ou econômica dos eleitores. Como ficou conhecido esse sistema de controle?</p>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="checkAnswer(2, false)">A) Parlamentarismo às Avessas e Encilhamento.</button>
+                            <button class="option-btn" onclick="checkAnswer(2, true)">B) Coronelismo e Voto de Cabresto.</button>
+                            <button class="option-btn" onclick="checkAnswer(2, false)">C) Política dos Governadores sem interferência local.</button>
+                        </div>
+                        <div id="feedback-2" class="feedback"></div>
+                    </div>
+                </div>
+
+                <!-- Desafio 3 -->
+                <div id="challenge-3" class="challenge-stage" style="display: none;">
+                    <div class="puzzle-box">
+                        <h3>Desafio 3: O Rompimento do Acordo (1930)</h3>
+                        <p>O pacto ruiu em 1930 quando o presidente Washington Luís quebrou a regra de alternância ao indicar outro paulista (Júlio Prestes) em vez de um candidato mineiro. Qual foi o desfecho histórico imediato?</p>
+                        <div class="options-grid">
+                            <button class="option-btn" onclick="checkAnswer(3, false)">A) A proclamação imediata da República Parlamentarista.</button>
+                            <button class="option-btn" onclick="checkAnswer(3, false)">B) A fundação da redemocratização pacífica liderada por São Paulo.</button>
+                            <button class="option-btn" onclick="checkAnswer(3, true)">C) A Revolução de 1930, que colocou Getúlio Vargas no poder e encerrou a República Velha.</button>
+                        </div>
+                        <div id="feedback-3" class="feedback"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TELA 3: VITÓRIA -->
+            <div id="screen-victory" class="screen">
+                <div class="victory-card">
+                    <h2>🎉 Cofre Desbloqueado!</h2>
+                    <p>Parabéns! Seu grupo decifrou todos os marcos da Política do Café com Leite com sucesso.</p>
+                    
+                    <div class="stats-box">
+                        <p><strong>Grupo:</strong> <span id="res-group"></span></p>
+                        <p><strong>Membros:</strong> <span id="res-members"></span></p>
+                        <p><strong>Erros Cometidos:</strong> <span id="res-errors"></span></p>
+                        <p><strong>Tempo Utilizado:</strong> <span id="res-time"></span></p>
+                    </div>
+
+                    <p style="margin-bottom: 10px; font-size: 0.9rem;">Clique abaixo para enviar o relatório diretamente para o e-mail da professora:</p>
+                    <button class="btn" onclick="sendEmailReport()" style="margin-bottom: 10px; background-color: var(--success-green);">Enviar Relatório por E-mail</button>
+                    
+                    <div class="email-preview" id="email-preview-text"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        let groupName = "";
+        let groupMembers = "";
+        let errorCount = 0;
+        let currentChallenge = 1;
+        let timeLeft = 40 * 60; // 40 minutes in seconds
+        let timerInterval;
+        let startTime;
+
+        function startGame() {
+            groupName = document.getElementById("group-name").value.trim();
+            groupMembers = document.getElementById("group-members").value.trim();
+
+            if (!groupName || !groupMembers) {
+                alert("Por favor, preencha o nome do grupo e os membros antes de começar!");
+                return;
+            }
+
+            document.getElementById("screen-register").classList.remove("active");
+            document.getElementById("screen-game").classList.add("active");
+
+            startTime = Date.now();
+            startTimer();
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    let minutes = Math.floor(timeLeft / 60);
+                    let seconds = timeLeft % 60;
+                    document.getElementById("timer-display").innerText = 
+                        `⏱️ Tempo: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                } else {
+                    clearInterval(timerInterval);
+                    alert("O tempo esgotou! O cofre permaneceu trancado.");
+                    location.reload();
+                }
+            }, 1000);
+        }
+
+        function checkAnswer(challengeNum, isCorrect) {
+            const feedbackEl = document.getElementById(`feedback-${challengeNum}`);
+            
+            if (isCorrect) {
+                feedbackEl.innerText = "Resposta Correta! Avançando para o próximo nível...";
+                feedbackEl.className = "feedback success";
+                
+                setTimeout(() => {
+                    document.getElementById(`challenge-${challengeNum}`).style.display = "none";
+                    currentChallenge++;
+                    
+                    if (currentChallenge <= 3) {
+                        document.getElementById(`challenge-${currentChallenge}`).style.display = "block";
+                    } else {
+                        endGame();
+                    }
+                }, 1200);
+            } else {
+                errorCount++;
+                document.getElementById("error-display").innerText = `❌ Erros: ${errorCount}`;
+                feedbackEl.innerText = "Resposta Incorreta! Tente analisar o contexto histórico novamente.";
+                feedbackEl.className = "feedback error";
+            }
+        }
+
+        function endGame() {
+            clearInterval(timerInterval);
+            document.getElementById("screen-game").classList.remove("active");
+            document.getElementById("screen-victory").classList.add("active");
+
+            let timeSpentSeconds = Math.floor((Date.now() - startTime) / 1000);
+            let minutesSpent = Math.floor(timeSpentSeconds / 60);
+            let secondsSpent = timeSpentSeconds % 60;
+            let timeFormatted = `${minutesSpent} min e ${secondsSpent} seg`;
+
+            document.getElementById("res-group").innerText = groupName;
+            document.getElementById("res-members").innerText = groupMembers;
+            document.getElementById("res-errors").innerText = errorCount;
+            document.getElementById("res-time").innerText = timeFormatted;
+
+            // Prepare email text body
+            const emailBody = `Relatório de Escape Room - Política do Café com Leite\n\n` +
+                              `Grupo: ${groupName}\n` +
+                              `Membros: ${groupMembers}\n` +
+                              `Total de Erros: ${errorCount}\n` +
+                              `Tempo de Conclusão: ${timeFormatted}`;
+
+            document.getElementById("email-preview-text").innerText = emailBody;
+            window.finalEmailBody = emailBody;
+        }
+
+        function sendEmailReport() {
+            const recipient = "prof.barbaravitoria@gmail.com";
+            const subject = encodeURIComponent(`Relatório Escape Room - Grupo: ${groupName}`);
+            const body = encodeURIComponent(window.finalEmailBody);
+            
+            window.location.href = `mailto:${recipient}?subject=${subject}&body=${body}`;
+        }
+    </script>
+</body>
+</html>
