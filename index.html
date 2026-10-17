@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>O Cofre da República: Enigma do Café com Leite</title>
+    <title>O Cofre da República: O Enigma do Café com Leite</title>
     <style>
         :root {
             --bg-espresso: #2B1810;
@@ -37,7 +37,7 @@
         .container {
             background-color: var(--card-latte);
             width: 100%;
-            max-width: 750px;
+            max-width: 800px;
             border-radius: 16px;
             box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
             overflow: hidden;
@@ -47,7 +47,7 @@
         header {
             background: linear-gradient(135deg, #4A2E1B, #2B1810);
             color: var(--yellow-crema);
-            padding: 25px;
+            padding: 20px;
             text-align: center;
             border-bottom: 4px solid var(--gold-amber);
         }
@@ -55,7 +55,6 @@
         header h1 {
             font-size: 1.8rem;
             margin-bottom: 5px;
-            letter-spacing: 1px;
             color: #FFD166;
         }
 
@@ -65,7 +64,7 @@
         }
 
         .content {
-            padding: 30px;
+            padding: 25px;
         }
 
         .screen {
@@ -78,7 +77,7 @@
 
         /* Form & Inputs */
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         label {
@@ -97,13 +96,6 @@
             background-color: #FFF;
         }
 
-        input[type="text"]:focus {
-            outline: none;
-            border-color: var(--accent-coffee);
-            box-shadow: 0 0 5px rgba(212, 163, 115, 0.5);
-        }
-
-        /* Buttons */
         .btn {
             background-color: var(--accent-coffee);
             color: var(--yellow-crema);
@@ -116,15 +108,12 @@
             width: 100%;
             transition: background 0.3s, transform 0.1s;
             box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+            margin-top: 10px;
         }
 
         .btn:hover {
             background-color: #583B28;
             transform: translateY(-2px);
-        }
-
-        .btn:active {
-            transform: translateY(0);
         }
 
         /* Game HUD */
@@ -134,10 +123,26 @@
             background-color: var(--yellow-crema);
             padding: 12px 20px;
             border-radius: 8px;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             font-weight: bold;
             border: 1px solid var(--gold-amber);
             color: var(--accent-coffee);
+        }
+
+        .progress-bar {
+            width: 100%;
+            background-color: #E0D3C1;
+            height: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--accent-coffee);
+            width: 0%;
+            transition: width 0.3s ease;
         }
 
         .puzzle-box {
@@ -145,13 +150,26 @@
             padding: 20px;
             border-radius: 10px;
             border-left: 6px solid var(--gold-amber);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .type-tag {
+            display: inline-block;
+            background-color: var(--gold-amber);
+            color: #FFF;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-transform: uppercase;
         }
 
         .puzzle-box h3 {
             color: var(--accent-coffee);
             margin-bottom: 10px;
+            font-size: 1.1rem;
         }
 
         .options-grid {
@@ -178,6 +196,31 @@
             color: #FFF;
         }
 
+        /* Select / Order inputs */
+        .order-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 10px;
+        }
+
+        .order-item {
+            background-color: #F4EAD2;
+            border: 2px dashed var(--gold-amber);
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .order-item select {
+            padding: 5px;
+            border-radius: 4px;
+            border: 1px solid var(--accent-coffee);
+            font-weight: bold;
+        }
+
         .feedback {
             margin-top: 15px;
             padding: 10px;
@@ -201,17 +244,6 @@
             display: block;
         }
 
-        /* Victory Screen */
-        .victory-card {
-            text-align: center;
-        }
-
-        .victory-card h2 {
-            color: var(--success-green);
-            font-size: 2rem;
-            margin-bottom: 15px;
-        }
-
         .stats-box {
             background-color: var(--yellow-crema);
             padding: 15px;
@@ -219,11 +251,6 @@
             margin: 20px 0;
             text-align: left;
             border: 1px dashed var(--gold-amber);
-        }
-
-        .stats-box p {
-            margin: 8px 0;
-            font-size: 1.05rem;
         }
 
         .email-preview {
@@ -245,16 +272,16 @@
     <div class="container">
         <header>
             <h1>☕ O Cofre da República</h1>
-            <p>Escape Room Histórico • A Política do Café com Leite</p>
+            <p>Desafio dos 30 Enigmas: A Política do Café com Leite</p>
         </header>
 
         <div class="content">
 
-            <!-- TELA 1: CADASTRO -->
+            <!-- TELA DE REGISTRO -->
             <div id="screen-register" class="screen active">
                 <div class="puzzle-box">
-                    <h3>Identificação do Grupo</h3>
-                    <p style="margin-bottom: 15px; font-size: 0.95rem;">Preencha os dados abaixo para iniciar a missão cronometrada de 40 minutos.</p>
+                    <h3>Cadastro do Grupo</h3>
+                    <p style="margin-bottom: 15px; font-size: 0.9rem;">Vocês têm 40 minutos para desvendar todos os 30 enigmas históricos e abrir o cofre da República Velha.</p>
                     
                     <div class="form-group">
                         <label for="group-name">Nome do Grupo:</label>
@@ -262,81 +289,45 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="group-members">Nome dos Membros (separados por vírgula):</label>
+                        <label for="group-members">Integrantes do Grupo:</label>
                         <input type="text" id="group-members" placeholder="Ex: Ana, Beatriz, Carlos, Daniel">
                     </div>
 
-                    <button class="btn" onclick="startGame()">Desbloquear o Primeiro Desafio</button>
+                    <button class="btn" onclick="startGame()">Iniciar Desafio (40 Minutos)</button>
                 </div>
             </div>
 
-            <!-- TELA 2: O JOGO / DESAFIOS -->
+            <!-- TELA DO JOGO -->
             <div id="screen-game" class="screen">
                 <div class="hud">
                     <span id="timer-display">⏱️ Tempo: 40:00</span>
+                    <span id="q-number">Questão: 1 / 30</span>
                     <span id="error-display">❌ Erros: 0</span>
                 </div>
 
-                <!-- Desafio 1 -->
-                <div id="challenge-1" class="challenge-stage">
-                    <div class="puzzle-box">
-                        <h3>Desafio 1: A Aliança das Oligarquias</h3>
-                        <p>Na República Velha (1894-1930), a política nacional era dominada por um pacto entre dois estados produtores fundamentais da economia agroexportadora. Qual alternativa define corretamente essa engrenagem?</p>
-                        <div class="options-grid">
-                            <button class="option-btn" onclick="checkAnswer(1, false)">A) Aliança entre o Rio Grande do Sul (pecuária) e o Rio de Janeiro (café).</button>
-                            <button class="option-btn" onclick="checkAnswer(1, true)">B) Alternância de poder entre São Paulo (café) e Minas Gerais (leite).</button>
-                            <button class="option-btn" onclick="checkAnswer(1, false)">C) Acordo industrial entre São Paulo e Bahia voltado para a borracha.</button>
-                        </div>
-                        <div id="feedback-1" class="feedback"></div>
-                    </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
                 </div>
 
-                <!-- Desafio 2 -->
-                <div id="challenge-2" class="challenge-stage" style="display: none;">
-                    <div class="puzzle-box">
-                        <h3>Desafio 2: O Mecanismo de Controle Eleitoral</h3>
-                        <p>O poder dos grandes proprietários de terras nas zonas rurais garantia a vitória dos candidatos oficiais através de fraudes e coerção física ou econômica dos eleitores. Como ficou conhecido esse sistema de controle?</p>
-                        <div class="options-grid">
-                            <button class="option-btn" onclick="checkAnswer(2, false)">A) Parlamentarismo às Avessas e Encilhamento.</button>
-                            <button class="option-btn" onclick="checkAnswer(2, true)">B) Coronelismo e Voto de Cabresto.</button>
-                            <button class="option-btn" onclick="checkAnswer(2, false)">C) Política dos Governadores sem interferência local.</button>
-                        </div>
-                        <div id="feedback-2" class="feedback"></div>
-                    </div>
-                </div>
-
-                <!-- Desafio 3 -->
-                <div id="challenge-3" class="challenge-stage" style="display: none;">
-                    <div class="puzzle-box">
-                        <h3>Desafio 3: O Rompimento do Acordo (1930)</h3>
-                        <p>O pacto ruiu em 1930 quando o presidente Washington Luís quebrou a regra de alternância ao indicar outro paulista (Júlio Prestes) em vez de um candidato mineiro. Qual foi o desfecho histórico imediato?</p>
-                        <div class="options-grid">
-                            <button class="option-btn" onclick="checkAnswer(3, false)">A) A proclamação imediata da República Parlamentarista.</button>
-                            <button class="option-btn" onclick="checkAnswer(3, false)">B) A fundação da redemocratização pacífica liderada por São Paulo.</button>
-                            <button class="option-btn" onclick="checkAnswer(3, true)">C) A Revolução de 1930, que colocou Getúlio Vargas no poder e encerrou a República Velha.</button>
-                        </div>
-                        <div id="feedback-3" class="feedback"></div>
-                    </div>
-                </div>
+                <div id="quiz-container"></div>
+                <div id="feedback-box" class="feedback"></div>
             </div>
 
-            <!-- TELA 3: VITÓRIA -->
+            <!-- TELA DE VITÓRIA -->
             <div id="screen-victory" class="screen">
-                <div class="victory-card">
-                    <h2>🎉 Cofre Desbloqueado!</h2>
-                    <p>Parabéns! Seu grupo decifrou todos os marcos da Política do Café com Leite com sucesso.</p>
+                <div style="text-align: center;">
+                    <h2 style="color: var(--success-green); font-size: 2rem;">🎉 Cofre Aberto com Sucesso!</h2>
+                    <p>Vocês dominaram todos os marcos da Política do Café com Leite!</p>
                     
                     <div class="stats-box">
                         <p><strong>Grupo:</strong> <span id="res-group"></span></p>
                         <p><strong>Membros:</strong> <span id="res-members"></span></p>
-                        <p><strong>Erros Cometidos:</strong> <span id="res-errors"></span></p>
-                        <p><strong>Tempo Utilizado:</strong> <span id="res-time"></span></p>
+                        <p><strong>Total de Erros:</strong> <span id="res-errors"></span></p>
+                        <p><strong>Tempo Restante:</strong> <span id="res-time"></span></p>
                     </div>
 
-                    <p style="margin-bottom: 10px; font-size: 0.9rem;">Clique abaixo para enviar o relatório diretamente para o e-mail da professora:</p>
-                    <button class="btn" onclick="sendEmailReport()" style="margin-bottom: 10px; background-color: var(--success-green);">Enviar Relatório por E-mail</button>
-                    
-                    <div class="email-preview" id="email-preview-text"></div>
+                    <button class="btn" onclick="sendEmailReport()" style="background-color: var(--success-green);">Enviar Relatório para a Professora Bárbara</button>
+                    <div class="email-preview" id="email-preview-text" style="margin-top: 15px;"></div>
                 </div>
             </div>
 
@@ -344,11 +335,302 @@
     </div>
 
     <script>
+        // BANCO DE DADOS COM AS 30 PERGUNTAS DIVERSIFICADAS
+        const questions = [
+            // 1. Seleção
+            {
+                type: "selecao",
+                tag: "Seleção Múltipla",
+                title: "1. A Base Agroexportadora",
+                question: "Quais eram os dois estados protagonistas da Política do Café com Leite na República Velha?",
+                options: ["São Paulo e Rio de Janeiro", "São Paulo e Minas Gerais", "Minas Gerais e Rio Grande do Sul", "Bahia e Pernambuco"],
+                answer: 1
+            },
+            // 2. Verdadeiro ou Falso
+            {
+                type: "vf",
+                tag: "Verdadeiro ou Falso",
+                title: "2. Sufrágio na República Velha",
+                question: "A Constituição de 1891 garantiu o direito de voto aos analfabetos e às mulheres.",
+                options: ["Verdadeiro", "Falso"],
+                answer: 1 // Falso
+            },
+            // 3. Código
+            {
+                type: "codigo",
+                tag: "Decifre o Código",
+                title: "3. O Domínio Local",
+                question: "Decifre a palavra-chave (Dica: Prática coercitiva dos chefes políticos locais sobre os eleitores rurais): <br><br><b>C - O - R - O - N - E - L - I - S - M - O</b>",
+                hint: "Digite o termo exatamente:",
+                answer: "CORONELISMO"
+            },
+            // 4. Ordenação
+            {
+                type: "ordem",
+                tag: "Colocar na Ordem",
+                title: "4. A Crise de 1930",
+                question: "Ordene os eventos do rompimento do pacto (Selecione a ordem 1, 2, 3):",
+                items: [
+                    { id: "A", text: "Washington Luís indica o paulista Júlio Prestes." },
+                    { id: "B", text: "Minas Gerais se alia ao RS e à Paraíba (Aliança Liberal)." },
+                    { id: "C", text: "Eclode a Revolução de 1930 e Getúlio Vargas assume o poder." }
+                ],
+                correctOrder: ["1", "2", "3"]
+            },
+            // 5. Seleção
+            {
+                type: "selecao",
+                tag: "Seleção Múltipla",
+                title: "5. Voto Aberto",
+                question: "Como era chamado o voto vigiado e fraudado controlado pelos coronéis?",
+                options: ["Voto Secreto", "Voto de Cabresto", "Voto Censitário", "Voto Direto"],
+                answer: 1
+            },
+            // 6. VF
+            {
+                type: "vf",
+                tag: "Verdadeiro ou Falso",
+                title: "6. Convênio de Taubaté (1906)",
+                question: "O Convênio de Taubaté foi um acordo em que o Estado comprava o excedente de café para manter os preços altos no mercado internacional.",
+                options: ["Verdadeiro", "Falso"],
+                answer: 0
+            },
+            // 7. Código
+            {
+                type: "codigo",
+                tag: "Decifre o Código",
+                title: "7. A Oposição Política",
+                question: "Complete o código com a coligação opositora formada em 1929: <br><b>ALIANÇA _________</b>",
+                hint: "Digite a palavra faltante:",
+                answer: "LIBERAL"
+            },
+            // 8. Seleção
+            {
+                type: "selecao",
+                tag: "Seleção Múltipla",
+                title: "8. Política dos Governadores",
+                question: "Quem foi o presidente que idealizou a 'Política dos Governadores' para harmonizar o poder federal e estadual?",
+                options: ["Deodoro da Fonseca", "Prudente de Morais", "Campos Sales", "Washington Luís"],
+                answer: 2
+            },
+            // 9. VF
+            {
+                type: "vf",
+                tag: "Verdadeiro ou Falso",
+                title: "9. Diversificação Industrial",
+                question: "Durante a República Velha, a indústria manufatureira superava o café em relevância econômica nacional.",
+                options: ["Verdadeiro", "Falso"],
+                answer: 1
+            },
+            // 10. Código
+            {
+                type: "codigo",
+                tag: "Decifre o Código",
+                title: "10. Nome Técnico",
+                question: "Insira a palavra para definir o governo controlado por um pequeno grupo de oligarcas: <br><b>O L I G A R Q U I A</b>",
+                hint: "Digite o termo:",
+                answer: "OLIGARQUIA"
+            },
+            // 11. Ordenação
+            {
+                type: "ordem",
+                tag: "Colocar na Ordem",
+                title: "11. Presidentes da Era Café com Leite",
+                question: "Ordene cronologicamente os mandatos presidenciais (1, 2, 3):",
+                items: [
+                    { id: "A", text: "Campos Sales" },
+                    { id: "B", text: "Afonso Pena" },
+                    { id: "C", text: "Washington Luís" }
+                ],
+                correctOrder: ["1", "2", "3"]
+            },
+            // 12. Seleção
+            {
+                type: "selecao",
+                tag: "Seleção Múltipla",
+                title: "12. Comissão Verificadora",
+                question: "O que era a prática do 'degola' exercida pela Comissão Verificadora de Poderes?",
+                options: ["Execução física de opositores", "Impugnação de diplomas de parlamentares de oposição eleitos", "Censura prévia aos jornais", "Cassação de direitos de cafeicultores"],
+                answer: 1
+            },
+            // 13. VF
+            {
+                type: "vf",
+                tag: "Verdadeiro ou Falso",
+                title: "13. O Cordeiro e o Cabresto",
+                question: "A prática do voto de cabresto dependia diretamente do sistema de voto secreto estabelecido pela Constituição de 1891.",
+                options: ["Verdadeiro", "Falso"],
+                answer: 1
+            },
+            // 14. Código
+            {
+                type: "codigo",
+                tag: "Decifre o Código",
+                title: "14. A Queda Econômica",
+                question: "Decifre o evento internacional de 1929 que abalou as exportações de café brasileiro: <br><b>C R I S E  D E  1 9 2 9</b>",
+                hint: "Digite o ano da crise:",
+                answer: "1929"
+            },
+            // 15. Seleção
+            {
+                type: "selecao",
+                tag: "Seleção Múltipla",
+                title: "15. Tenentismo",
+                question: "Qual movimento militar da década de 1920 contestava a dominação oligárquica e o fraude eleitoral?",
+                options: ["Revolta da Chibata", "Tenentismo", "Canudos", "Balaiada"],
+                answer: 1
+            },
+            // 16. VF
+            {
+                type: "vf",
+                tag: "Verdadeiro ou Falso",
+                title: "16. A Pecuária Mineira",
+                question: "O termo 'leite' na aliança era simbólico, pois a força econômica de Minas Gerais também vinha fortemente do café e de sua grande bancada eleitoral.",
+                options: ["Verdadeiro", "Falso"],
+                answer: 0
+            },
+            // 17. Código
+            {
+                type: "codigo",
+                tag: "Decifre o Código",
+                title: "17. O Estopim de 1930",
+                question: "Qual o sobrenome do candidato à vice-presidência assassinado em Recife cujo crime serviu de estopim para a Revolução de 1930? <br><b>João _________</b>",
+                hint: "Digite o sobrenome:",
+                answer: "PESSOA"
+            },
+            // 18. Ordenação
+            {
+                type: "ordem",
+                tag: "Colocar na Ordem",
+                title: "18. Encadeamento da Fraude",
+                question: "Ordene a cadeia de dependência eleitoral (1, 2, 3):",
+                items: [
+                    { id: "A", text: "Coronel coagir eleitores no município." },
+                    { id: "B", text: "Governador do estado garante bancada no Congresso." },
+                    { id: "C", text: "Presidente repassa verbas e favores ao estado e ao coronel." }
+                ],
+                correctOrder: ["1", "2", "3"]
+            },
+            // 19. Seleção
+            {
+                type: "selecao",
+                tag: "Seleção Múltipla",
+                title: "19. A 'Reação Republicana'",
+                question: "A campanha da 'Reação Republicana' (1921-1922) tentou quebrar a hegemonia de SP e MG lançando qual candidato?",
+                options: ["Nilo Peçanha", "Getúlio Vargas", "Hermes da Fonseca", "Rui Barbosa"],
+                answer: 0
+            },
+            // 20. VF
+            {
+                type: "vf",
+                tag: "Verdadeiro ou Falso",
+                title: "20. Fraudes Eleitorais",
+                question: "A inclusão de nomes de pessoas falecidas nas listas de votação ('voto dos mortos') era uma fraude comum na época.",
+                options: ["Verdadeiro", "Falso"],
+                answer: 0
+            },
+            // 21. Código
+            {
+                type: "codigo",
+                tag: "Decifre o Código",
+                title: "21. A Capital Federal",
+                question: "Qual era a cidade capital do Brasil durante a Política do Café com Leite? <br><b>R I O  D E  J A N E I R O</b>",
+                hint: "Digite o nome da cidade:",
+                answer: "RIO DE JANEIRO"
+            },
+            // 22. Seleção
+            {
+                type: "selecao",
+                tag: "Seleção Múltipla",
+                title: "22. Coluna Prestes",
+                question: "A Coluna Prestes percorreu o interior do Brasil protestando contra:",
+                options: ["O domínio da oligarquia agroexportadora e a miséria social", "A imigração europeia no campo", "O Convênio de Taubaté", "A industrialização urbana"],
+                answer: 0
+            },
+            // 23. VF
+            {
+                type: "vf",
+                tag: "Verdadeiro ou Falso",
+                title: "23. O Voto Feminino",
+                question: "Apenas após a Revolução de 1930 o voto feminino foi finalmente oficializado no Código Eleitoral de 1932.",
+                options: ["Verdadeiro", "Falso"],
+                answer: 0
+            },
+            // 24. Código
+            {
+                type: "codigo",
+                tag: "Decifre o Código",
+                title: "24. O Lider da Revolução",
+                question: "Quem assumiu o poder como chefe do Governo Provisório em 1930? <br><b>Getúlio _________</b>",
+                hint: "Digite o sobrenome:",
+                answer: "VARGAS"
+            },
+            // 25. Seleção
+            {
+                type: "selecao",
+                tag: "Seleção Múltipla",
+                title: "25. A Revolta dos 18 do Forte",
+                question: "O primeiro grande levante tenentista ocorreu no Forte de Copacabana em qual ano?",
+                options: ["1914", "1922", "1930", "1935"],
+                answer: 1
+            },
+            // 26. VF
+            {
+                type: "vf",
+                tag: "Verdadeiro ou Falso",
+                title: "26. República das Espadas",
+                question: "A República das Espadas (1889-1894) veio DEPOIS da Política do Café com Leite.",
+                options: ["Verdadeiro", "Falso"],
+                answer: 1
+            },
+            // 27. Ordenação
+            {
+                type: "ordem",
+                tag: "Colocar na Ordem",
+                title: "27. Fases da Primeira República",
+                question: "Ordene as fases históricas (1, 2, 3):",
+                items: [
+                    { id: "A", text: "República das Espadas (Governos Militares)" },
+                    { id: "B", text: "Consolidação da Política do Café com Leite" },
+                    { id: "C", text: "Revolução de 1930 e Fim da República Velha" }
+                ],
+                correctOrder: ["1", "2", "3"]
+            },
+            // 28. Seleção
+            {
+                type: "selecao",
+                tag: "Seleção Múltipla",
+                title: "28. O Cliente Político",
+                question: "A troca de favores entre o coronel e os eleitores (empregos, remédios, proteção) é chamada de:",
+                options: ["Clientelismo", "Feudalismo", "Anarquismo", "Comunismo"],
+                answer: 0
+            },
+            // 29. VF
+            {
+                type: "vf",
+                tag: "Verdadeiro ou Falso",
+                title: "29. Queima do Café",
+                question: "Durante a crise pós-1929, o governo brasileiro chegou a queimar e estocar milhões de sacas de café para sustentar o preço do produto.",
+                options: ["Verdadeiro", "Falso"],
+                answer: 0
+            },
+            // 30. Código
+            {
+                type: "codigo",
+                tag: "Decifre o Código Final",
+                title: "30. A Senha do Cofre",
+                question: "Digite a palavra secreta para selar o cofre da memória republicana: <br><b>☕ C A F E</b>",
+                hint: "Digite a palavra:",
+                answer: "CAFE"
+            }
+        ];
+
+        // VARIÁVEIS DE CONTROLE
         let groupName = "";
         let groupMembers = "";
         let errorCount = 0;
-        let currentChallenge = 1;
-        let timeLeft = 40 * 60; // 40 minutes in seconds
+        let currentQ = 0;
+        let timeLeft = 40 * 60; // 40 minutos
         let timerInterval;
         let startTime;
 
@@ -366,46 +648,139 @@
 
             startTime = Date.now();
             startTimer();
+            renderQuestion();
         }
 
         function startTimer() {
             timerInterval = setInterval(() => {
                 if (timeLeft > 0) {
                     timeLeft--;
-                    let minutes = Math.floor(timeLeft / 60);
-                    let seconds = timeLeft % 60;
+                    let min = Math.floor(timeLeft / 60);
+                    let sec = timeLeft % 60;
                     document.getElementById("timer-display").innerText = 
-                        `⏱️ Tempo: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                        `⏱️ Tempo: ${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
                 } else {
                     clearInterval(timerInterval);
-                    alert("O tempo esgotou! O cofre permaneceu trancado.");
+                    alert("O tempo esgotou! O cofre foi trancado.");
                     location.reload();
                 }
             }, 1000);
         }
 
-        function checkAnswer(challengeNum, isCorrect) {
-            const feedbackEl = document.getElementById(`feedback-${challengeNum}`);
+        function updateProgress() {
+            document.getElementById("q-number").innerText = `Questão: ${currentQ + 1} / ${questions.length}`;
+            let percentage = ((currentQ) / questions.length) * 100;
+            document.getElementById("progress-fill").style.width = `${percentage}%`;
+        }
+
+        function renderQuestion() {
+            updateProgress();
+            const container = document.getElementById("quiz-container");
+            const feedback = document.getElementById("feedback-box");
+            feedback.style.display = "none";
             
-            if (isCorrect) {
-                feedbackEl.innerText = "Resposta Correta! Avançando para o próximo nível...";
-                feedbackEl.className = "feedback success";
-                
-                setTimeout(() => {
-                    document.getElementById(`challenge-${challengeNum}`).style.display = "none";
-                    currentChallenge++;
-                    
-                    if (currentChallenge <= 3) {
-                        document.getElementById(`challenge-${currentChallenge}`).style.display = "block";
-                    } else {
-                        endGame();
-                    }
-                }, 1200);
+            const q = questions[currentQ];
+            let html = `
+                <div class="puzzle-box">
+                    <span class="type-tag">${q.tag}</span>
+                    <h3>${q.title}</h3>
+                    <p style="margin-bottom: 15px;">${q.question}</p>
+            `;
+
+            if (q.type === "selecao" || q.type === "vf") {
+                html += `<div class="options-grid">`;
+                q.options.forEach((opt, idx) => {
+                    html += `<button class="option-btn" onclick="checkChoice(${idx})">${opt}</button>`;
+                });
+                html += `</div>`;
+            } else if (q.type === "codigo") {
+                html += `
+                    <div style="margin-top:10px;">
+                        <label>${q.hint}</label>
+                        <input type="text" id="code-input" style="text-transform:uppercase;" placeholder="Digite aqui...">
+                        <button class="btn" onclick="checkCode()">Validar Código</button>
+                    </div>
+                `;
+            } else if (q.type === "ordem") {
+                html += `<ul class="order-list">`;
+                q.items.forEach((item, idx) => {
+                    html += `
+                        <li class="order-item">
+                            <span>${item.text}</span>
+                            <select id="ord-${idx}">
+                                <option value="">Posição...</option>
+                                <option value="1">1ª</option>
+                                <option value="2">2ª</option>
+                                <option value="3">3ª</option>
+                            </select>
+                        </li>
+                    `;
+                });
+                html += `</ul><button class="btn" onclick="checkOrder()">Confirmar Ordem</button>`;
+            }
+
+            html += `</div>`;
+            container.innerHTML = html;
+        }
+
+        function triggerError(msg) {
+            errorCount++;
+            document.getElementById("error-display").innerText = `❌ Erros: ${errorCount}`;
+            const fb = document.getElementById("feedback-box");
+            fb.innerText = msg || "Resposta Incorreta! Tente novamente.";
+            fb.className = "feedback error";
+        }
+
+        function triggerSuccess() {
+            const fb = document.getElementById("feedback-box");
+            fb.innerText = "Correto! Avançando...";
+            fb.className = "feedback success";
+            
+            setTimeout(() => {
+                currentQ++;
+                if (currentQ < questions.length) {
+                    renderQuestion();
+                } else {
+                    endGame();
+                }
+            }, 800);
+        }
+
+        function checkChoice(idx) {
+            if (idx === questions[currentQ].answer) {
+                triggerSuccess();
             } else {
-                errorCount++;
-                document.getElementById("error-display").innerText = `❌ Erros: ${errorCount}`;
-                feedbackEl.innerText = "Resposta Incorreta! Tente analisar o contexto histórico novamente.";
-                feedbackEl.className = "feedback error";
+                triggerError("Opção incorreta! Revise o conceito histórico.");
+            }
+        }
+
+        function checkCode() {
+            const val = document.getElementById("code-input").value.trim().toUpperCase();
+            // Normalizar acentos
+            const cleanVal = val.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            const cleanAns = questions[currentQ].answer.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+            if (cleanVal === cleanAns) {
+                triggerSuccess();
+            } else {
+                triggerError("Código/Palavra incorreta! Tente novamente.");
+            }
+        }
+
+        function checkOrder() {
+            const q = questions[currentQ];
+            let userOrder = [];
+            for (let i = 0; i < q.items.length; i++) {
+                let val = document.getElementById(`ord-${i}`).value;
+                userOrder.push(val);
+            }
+
+            let isCorrect = userOrder.every((val, index) => val === q.correctOrder[index]);
+
+            if (isCorrect) {
+                triggerSuccess();
+            } else {
+                triggerError("Ordem cronológica incorreta! Reorganize a sequência.");
             }
         }
 
@@ -415,21 +790,23 @@
             document.getElementById("screen-victory").classList.add("active");
 
             let timeSpentSeconds = Math.floor((Date.now() - startTime) / 1000);
-            let minutesSpent = Math.floor(timeSpentSeconds / 60);
-            let secondsSpent = timeSpentSeconds % 60;
-            let timeFormatted = `${minutesSpent} min e ${secondsSpent} seg`;
+            let min = Math.floor(timeSpentSeconds / 60);
+            let sec = timeSpentSeconds % 60;
+            let timeFormatted = `${min} min e ${sec} seg`;
 
             document.getElementById("res-group").innerText = groupName;
             document.getElementById("res-members").innerText = groupMembers;
             document.getElementById("res-errors").innerText = errorCount;
             document.getElementById("res-time").innerText = timeFormatted;
 
-            // Prepare email text body
-            const emailBody = `Relatório de Escape Room - Política do Café com Leite\n\n` +
+            const emailBody = `RELATÓRIO DE ESCAPE ROOM - CAFÉ COM LEITE\n` +
+                              `========================================\n` +
                               `Grupo: ${groupName}\n` +
-                              `Membros: ${groupMembers}\n` +
+                              `Integrantes: ${groupMembers}\n` +
                               `Total de Erros: ${errorCount}\n` +
-                              `Tempo de Conclusão: ${timeFormatted}`;
+                              `Tempo Total Utilizado: ${timeFormatted}\n` +
+                              `Perguntas Concluídas: 30 / 30\n` +
+                              `========================================`;
 
             document.getElementById("email-preview-text").innerText = emailBody;
             window.finalEmailBody = emailBody;
@@ -437,7 +814,7 @@
 
         function sendEmailReport() {
             const recipient = "prof.barbaravitoria@gmail.com";
-            const subject = encodeURIComponent(`Relatório Escape Room - Grupo: ${groupName}`);
+            const subject = encodeURIComponent(`Escape Room História - Grupo: ${groupName}`);
             const body = encodeURIComponent(window.finalEmailBody);
             
             window.location.href = `mailto:${recipient}?subject=${subject}&body=${body}`;
